@@ -24,6 +24,8 @@ public class p_look : MonoBehaviour
     void Update()
     {
         MouseLook();
+        // OrientationRotation();
+        // BodyRotation();
     }
     
     private void MouseLook()
@@ -37,9 +39,16 @@ public class p_look : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         transform.localRotation = Quaternion.Euler(xRotation,yRotation,0);
-        //transform.rotation = Quaternion.Euler(0, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        pBody.rotation = Quaternion.Euler(0,yRotation,0);
     }
+
+    // private void OrientationRotation(){
+    //     orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+    // }
+    // private void BodyRotation(){
+    //     pBody.rotation = Quaternion.Euler(0,yRotation,0);
+    // }
 
     //New Input System Boilerplate
     private void OnEnable() => _ctrl.Enable();
