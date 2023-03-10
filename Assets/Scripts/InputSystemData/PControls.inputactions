@@ -6,15 +6,6 @@
             "id": "b0edce51-7c0c-465b-bbcd-0c96303cbce4",
             "actions": [
                 {
-                    "name": "Movement",
-                    "type": "Button",
-                    "id": "8abddf16-42b9-4983-8248-6a4b7f8fde60",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "43508069-6ab4-412e-bdb1-252a760b97d6",
@@ -76,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Movement",
+                    "type": "Button",
+                    "id": "64d7bea0-f0c9-4913-87f0-d8e24a1fc460",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -146,72 +146,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "WS",
-                    "id": "9e19a518-e67b-48de-b4c4-7295e841fe34",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "positive",
-                    "id": "9ae3b320-55dc-4746-a66e-b1b9c8a42336",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "negative",
-                    "id": "f5c1b2c7-0a8b-4c24-981e-23dbefc6dc86",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "AD",
-                    "id": "bb8d68ca-1ae6-44dc-b26f-1828e5aeabdd",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "2d3d1458-ed13-4db1-adde-724bc49bf19f",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "a674a23e-e2b0-4b99-87e0-aa2d57e9548c",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "d3f983b2-5fdc-4a1e-a518-70e2460c55ea",
                     "path": "<Mouse>/delta",
@@ -221,6 +155,72 @@
                     "action": "Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "W/S",
+                    "id": "b77a1d6b-15b6-4927-a11a-d8c9632b88da",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "820dc964-1b57-4863-9236-03c3f99b7708",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "ff909b2b-9e0c-4991-8dab-a54d758b7149",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "A/D",
+                    "id": "b18b2469-c56e-4734-a2ee-82039036088a",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "bb2c114b-448b-4804-990a-b0eab4a17509",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "009c97be-47cc-48cc-846d-700cba855656",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -257,7 +257,7 @@
             "id": "79a2e96b-85e3-405d-9b7b-5858aa104f9e",
             "actions": [
                 {
-                    "name": "Ability 0",
+                    "name": "Flashlight",
                     "type": "Button",
                     "id": "0badc05b-b28d-4208-9a99-e423519a4e38",
                     "expectedControlType": "Button",
@@ -274,7 +274,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Ability 0",
+                    "action": "Flashlight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
