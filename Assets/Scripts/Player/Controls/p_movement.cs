@@ -21,28 +21,28 @@ public class p_movement : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 moveDirection;
     private float startYScale;
-    private float movement;
 
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
     private bool isGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
-    private bool isWalking => movement != 0;
+    private bool isWalking => _rb.velocity.z != 0;
     
     void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        playerTransform = GetComponent<Transform>();
-
         _rb.freezeRotation = true;
+        playerTransform = GetComponent<Transform>();
         startYScale  = playerTransform.localScale.y;
     }
     private void Update()
     {
         if (isGrounded) _rb.drag = groundDrag;
+        else
+        {
+            _rb.drag = 0;
+        }
         StateHandler();
         SpeedControl();
     }
-    //Crouching and Jumping works now.
-    //TODO: Create Walking.
     private enum PlayerStates
     {
         IDLE,
@@ -57,7 +57,12 @@ public class p_movement : MonoBehaviour
         if(!isWalking && isGrounded){
             playerState = PlayerStates.IDLE;
         }
-        else{
+        else if (isWalking)
+        {
+            playerState = PlayerStates.WALKING;
+        }
+        else
+        {
             playerState = PlayerStates.AIR;
         }
     }
@@ -96,7 +101,7 @@ public class p_movement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(_rb.velocity.x,0f,_rb.velocity.z);
 
-        if(flatVel.magnitude > movementSpeed)
+        if(flatVel.magnitude > movementSpeed && isGrounded)
         {
             Vector3 limitedVel = flatVel.normalized * movementSpeed;
             _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
@@ -118,4 +123,5 @@ public class p_movement : MonoBehaviour
     {
         playerTransform.localScale = new Vector3(transform.localScale.x, startYScale, 1);
     }
+
 }
