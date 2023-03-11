@@ -6,8 +6,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] private p_movement MovementScriptObject;
     [SerializeField] private p_look LookScriptObject;
 
-  //  private float horizontalInput;
-    //private float verticalInput;
  
     private void Awake()
     {
@@ -24,18 +22,10 @@ public class InputManager : MonoBehaviour
         MyInput();
     }
 
-    private void FixedUpdate()
-    {
-        //OLD VERSION
-        // MovementScriptObject.HandleMovement(horizontalInput,verticalInput);
-
-    }
-
     private void MyInput()
     {
-        //OLD VERSION
-       //horizontalInput = _ctrl.Player.Movement.//_ctrl.Player.Movement.ReadValue<float>();
-       //verticalInput = _ctrl.Player.Movement.ReadValue<float>();
+        Vector2 playerVector = _ctrl.Player.Movement.ReadValue<Vector2>();
+        MovementScriptObject.HandleMovement(playerVector);
     }
 
     //New input system boilerplate.

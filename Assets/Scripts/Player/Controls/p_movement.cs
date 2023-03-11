@@ -19,7 +19,7 @@ public class p_movement : MonoBehaviour
 
     private Transform playerTransform;
     private Rigidbody _rb;
-    private Vector2 moveDirection;
+    private Vector3 moveDirection;
     private float startYScale;
     private float movement;
 
@@ -83,13 +83,12 @@ public class p_movement : MonoBehaviour
             break;
         }
     }
-    //public void HandleMovement(float horizontalInput ,float verticalInput)
     public void HandleMovement(Vector2 input)
     {
-        // moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        // moveDirection = orientation.forward * verticalInput + orientation.right * verticalInput;
+        moveDirection = Vector3.zero;
         moveDirection.x = input.x;
-        moveDirection.y = input.y;
+        moveDirection.z = input.y;
+        moveDirection = orientation.forward * moveDirection.z + orientation.right * moveDirection.x;
         _rb.AddForce(moveDirection.normalized * movementSpeed * 10f,ForceMode.Force);
     }
 
