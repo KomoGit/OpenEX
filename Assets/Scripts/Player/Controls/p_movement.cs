@@ -1,5 +1,4 @@
 using UnityEngine;
-//using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -12,23 +11,24 @@ public class p_movement : MonoBehaviour
     [Header("Speed and Force")]
     [SerializeField] private float movementSpeed;
     [SerializeField] private float silentWalkSpeed;
-    [SerializeField] private float maxForce;
+    [SerializeField] private float groundDrag;
+    //[SerializeField] private float maxForce;
     [Header("Jump and Crouch")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float crouchYScale;
-    private float startYScale;
+
     private Transform playerTransform;
-    private Vector2 moveDirection;
     private Rigidbody _rb;
+    private Vector2 moveDirection;
+    private float startYScale;
     private float movement;
-    
-    private bool isGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
+
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
+    private bool isGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
     private bool isWalking => movement != 0;
     
     void Awake()
     {
-        //_ctrl = new PControls();
         _rb = GetComponent<Rigidbody>();
         playerTransform = GetComponent<Transform>();
 
@@ -37,11 +37,9 @@ public class p_movement : MonoBehaviour
     }
     private void Update()
     {
+        if (isGrounded) _rb.drag = groundDrag;
         StateHandler();
-    }
-    private void FixedUpdate()
-    {
-        handleMovement();
+        SpeedControl();
     }
     //Crouching and Jumping works now.
     //TODO: Create Walking.
@@ -71,20 +69,39 @@ public class p_movement : MonoBehaviour
             case "movementspeed":
             movementSpeed = change;
             break;
+
             case "jumpforce":
             jumpForce = change;
             break;
+
             case "silentwalkspeed":
             silentWalkSpeed = change;
             break;
+
             default:
             Debug.Log("Data: " + index + " not found.");
             break;
         }
     }
-    private void handleMovement()
+    //public void HandleMovement(float horizontalInput ,float verticalInput)
+    public void HandleMovement(Vector2 input)
     {
-        
+        // moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        // moveDirection = orientation.forward * verticalInput + orientation.right * verticalInput;
+        moveDirection.x = input.x;
+        moveDirection.y = input.y;
+        _rb.AddForce(moveDirection.normalized * movementSpeed * 10f,ForceMode.Force);
+    }
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(_rb.velocity.x,0f,_rb.velocity.z);
+
+        if(flatVel.magnitude > movementSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * movementSpeed;
+            _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
+        }
     }
     public void Jump()
     {
@@ -95,7 +112,6 @@ public class p_movement : MonoBehaviour
     }
     public void Crouch()
     {
-        var currentYScale = crouchYScale;
         playerTransform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         if (isGrounded) _rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
     }
