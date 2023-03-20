@@ -31,6 +31,10 @@ public class InputManager : MonoBehaviour
     private void MyInput()
     {
         Vector2 playerVector = _ctrl.Player.Movement.ReadValue<Vector2>();
+        if (MovementScriptObject.OnSlope())
+        {
+            MovementScriptObject.HandleMovement(playerVector, MovementScriptObject.GetSlopeMoveDirection());
+        }
         MovementScriptObject.HandleMovement(playerVector);
     }
 

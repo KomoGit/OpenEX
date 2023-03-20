@@ -6,13 +6,15 @@ public class p_movement : MonoBehaviour
 {
     [Header("Player Configures")]
     [SerializeField] private PlayerStates playerState;
+    [SerializeField] private RaycastHit slopeHit;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform orientation;
     [Header("Speed and Force")]
+    [SerializeField] private float playerHeight;
+    [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float regularMovementSpeed;
     [SerializeField] private float silentMovementSpeed;
     [SerializeField] private float groundDrag;
-    //[SerializeField] private float maxForce;
     [Header("Jump and Crouch")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float crouchYScale;
@@ -25,7 +27,7 @@ public class p_movement : MonoBehaviour
 
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
     private bool isGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
-    private bool isWalking => _rb.velocity.z <= 0;
+    private bool isWalking => _rb.velocity != Vector3.zero;
     
     void Awake()
     {
@@ -42,6 +44,11 @@ public class p_movement : MonoBehaviour
         {
             _rb.drag = 0;
         }
+        if (OnSlope())
+        {
+            _rb.useGravity = false;
+        }
+        _rb.useGravity = true;
         StateHandler();
         SpeedControl();
     }
@@ -59,14 +66,14 @@ public class p_movement : MonoBehaviour
         if(!isWalking && isGrounded){
             playerState = PlayerStates.IDLE;
         }
-        else if (isWalking)
+        else if (isWalking && isGrounded)
         {
             playerState = PlayerStates.WALKING;
         }
-        /*else if (currentMovementSpeed == silentMovementSpeed)
+        else if (currentMovementSpeed <= silentMovementSpeed && isWalking && isGrounded)
         {
             playerState = PlayerStates.SILENTWALKING;
-        }*/
+        }
         else
         {
             playerState = PlayerStates.AIR;
@@ -80,15 +87,12 @@ public class p_movement : MonoBehaviour
             case "movementspeed":
             regularMovementSpeed = change;
             break;
-
             case "jumpforce":
             jumpForce = change;
             break;
-
             case "silentwalkspeed":
             silentMovementSpeed = change;
             break;
-
             default:
             Debug.Log("Data: " + index + " not found.");
             break;
@@ -97,17 +101,19 @@ public class p_movement : MonoBehaviour
     public void HandleMovement(Vector2 input)
     {
         moveDirection = Vector3.zero;
-        moveDirection.x = input.x;
-        moveDirection.z = input.y;
-        moveDirection = orientation.forward * moveDirection.z + orientation.right * moveDirection.x;
+        moveDirection = orientation.forward * input.y + orientation.right * input.x;
         _rb.AddForce(moveDirection.normalized * currentMovementSpeed * 10f,ForceMode.Force);
+    }
+    public void HandleMovement(Vector2 input,Vector3 direction)
+    {
+        _rb.AddForce(direction.normalized * currentMovementSpeed * 20f, ForceMode.Force);
     }
 
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(_rb.velocity.x,0f,_rb.velocity.z);
 
-        if(flatVel.magnitude > currentMovementSpeed)//&& isGrounded
+        if(flatVel.magnitude > currentMovementSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * currentMovementSpeed;
             _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
@@ -140,6 +146,21 @@ public class p_movement : MonoBehaviour
     public void StopSilentWalk()
     {
         currentMovementSpeed = regularMovementSpeed; 
+    }
+    public bool OnSlope()
+    {
+        Debug.Log("On a slope!");
+        if (Physics.Raycast(transform.position,Vector3.down,out slopeHit,playerHeight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up,slopeHit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+        return false;
+    }
+
+    public Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
 
 }
