@@ -70,7 +70,7 @@ public class p_movement : MonoBehaviour
         {
             playerState = PlayerStates.WALKING;
         }
-        else if (currentMovementSpeed <= silentMovementSpeed && isWalking && isGrounded)
+        else if (currentMovementSpeed <= regularMovementSpeed && isGrounded)
         {
             playerState = PlayerStates.SILENTWALKING;
         }
@@ -149,7 +149,6 @@ public class p_movement : MonoBehaviour
     }
     public bool OnSlope()
     {
-        Debug.Log("On a slope!");
         if (Physics.Raycast(transform.position,Vector3.down,out slopeHit,playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up,slopeHit.normal);
