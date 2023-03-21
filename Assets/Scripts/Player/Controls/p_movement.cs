@@ -10,15 +10,17 @@ public class p_movement : MonoBehaviour
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform orientation;
     [Header("Speed and Force")]
-    [SerializeField] private float playerHeight;
-    [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float regularMovementSpeed;
     [SerializeField] private float silentMovementSpeed;
     [SerializeField] private float groundDrag;
     [Header("Jump and Crouch")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float crouchYScale;
-
+    [Header("Slope Handling")]
+    [SerializeField] private float slopeAdjustedMass;
+    [SerializeField] private float defaultMass; 
+    [SerializeField] private float playerHeight;
+    [SerializeField] private float maxSlopeAngle;
     private Transform playerTransform;
     private Rigidbody _rb;
     private Vector3 moveDirection;
@@ -39,6 +41,7 @@ public class p_movement : MonoBehaviour
     }
     private void Update()
     {
+        _rb.useGravity = !OnSlope();
         if (isGrounded) _rb.drag = groundDrag;
         else
         {
@@ -46,9 +49,12 @@ public class p_movement : MonoBehaviour
         }
         if (OnSlope())
         {
-            _rb.useGravity = false;
+            _rb.mass = slopeAdjustedMass;
         }
-        _rb.useGravity = true;
+        else
+        {
+            _rb.mass = defaultMass;
+        }     
         StateHandler();
         SpeedControl();
     }
@@ -104,7 +110,7 @@ public class p_movement : MonoBehaviour
         moveDirection = orientation.forward * input.y + orientation.right * input.x;
         _rb.AddForce(moveDirection.normalized * currentMovementSpeed * 10f,ForceMode.Force);
     }
-    public void HandleMovement(Vector2 input,Vector3 direction)
+    public void HandleMovement(Vector3 direction)
     {
         _rb.AddForce(direction.normalized * currentMovementSpeed * 20f, ForceMode.Force);
     }
@@ -122,6 +128,7 @@ public class p_movement : MonoBehaviour
     public void Jump()
     {
         if(isGrounded){
+            _rb.mass = defaultMass;
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
             _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
