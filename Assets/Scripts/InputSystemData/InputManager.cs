@@ -3,7 +3,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     private PControls _ctrl;
-    //[SerializeField] private GravityGun GravityGunObject;
+    [SerializeField] private CarryObject _carryObject;
     [SerializeField] private Flashlight FlashlightObject;
     [SerializeField] private p_movement MovementScriptObject;
     [SerializeField] private p_look LookScriptObject;
@@ -13,7 +13,8 @@ public class InputManager : MonoBehaviour
     {
         _ctrl = new PControls();
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
-        //_ctrl.Player.Interact.started += _ => GravityGunObject.checkObject();
+        _ctrl.Player.Interact.started += _ => _carryObject.AbilityActive();
+        _ctrl.Player.Shoot.started += _ => _carryObject.ThrowObject();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
         _ctrl.Player.Crouch.canceled += _ => MovementScriptObject.StopCrouch();
         _ctrl.Abilities.Flashlight.started += _ => FlashlightObject.EnableDisableLight();

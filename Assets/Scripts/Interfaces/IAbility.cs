@@ -1,6 +1,6 @@
 public interface IAbility 
 {
-    public void abilityActive();
+    public void AbilityActive();
 
-    public void abilityDrain();
+    public void AbilityDrain();
 }
