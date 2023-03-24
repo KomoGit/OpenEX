@@ -13,11 +13,11 @@ public class InputManager : MonoBehaviour
     {
         _ctrl = new PControls();
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
-        _ctrl.Player.Interact.started += _ => _carryObject.AbilityActive();
+        _ctrl.Player.Interact.started += _ => _carryObject.AbilityActivate();
         _ctrl.Player.Shoot.started += _ => _carryObject.ThrowObject();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
         _ctrl.Player.Crouch.canceled += _ => MovementScriptObject.StopCrouch();
-        _ctrl.Abilities.Flashlight.started += _ => FlashlightObject.EnableDisableLight();
+        _ctrl.Abilities.Flashlight.started += _ => FlashlightObject.AbilityActivate();
         _ctrl.Player.SilentWalk.started += _ => MovementScriptObject.SilentWalk();
         _ctrl.Player.SilentWalk.canceled += _ => MovementScriptObject.StopSilentWalk();
     }

@@ -21,7 +21,7 @@ public class CarryObject : MonoBehaviour,IAbility
         HoldObject();
         IgnorePlayerCollission();
     }
-    public void AbilityActive()
+    public void AbilityActivate()
     {
         if (_grabbedRB)
         {

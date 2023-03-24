@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class Flashlight : MonoBehaviour
+public class Flashlight : MonoBehaviour,IAbility
 {
     //This is a temporary measure made by me. The ability will be changed and I will make a Interface for all ability scripts to follow.
+    [SerializeField] AbilityManager AbilityManager;
     [SerializeField] Light Light;
+    [SerializeField] private float DrainRate;
     //[SerializeField] AudioSource m_AudioSource;
     [SerializeField] private AudioClip FlashlightSFX;
     private bool FlashlightEnabled = false;
@@ -17,13 +19,18 @@ public class Flashlight : MonoBehaviour
     private void Update()
     {
         Light.gameObject.SetActive(FlashlightEnabled);
+        if(FlashlightEnabled)
+        {
+            AbilityDrain();
+        }
     }
 
-    public void EnableDisableLight()
+    public void AbilityActivate()
     {
         if (FlashlightEnabled == false)
         {
             FlashlightEnabled = true;
+            //AbilityDrain();
         }
         else
         {
@@ -31,9 +38,15 @@ public class Flashlight : MonoBehaviour
         }
     }
 
-    /*private void PlayFlashSound()
+    public void AbilityDrain()
     {
-        m_AudioSource.clip = FlashlightSound;
-        m_AudioSource.Play();
-    }*/
+      if (AbilityManager.IsEnergyDepleted(DrainRate))
+      {
+        FlashlightEnabled = false;
+      }
+      else
+      {
+        AbilityManager.IsEnergyDepleted(DrainRate);
+      } 
+    }
 }
