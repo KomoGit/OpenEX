@@ -2,10 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class p_movement : MonoBehaviour
+public class P_movement : MonoBehaviour
 {
     [Header("Player Configures")]
+#pragma warning disable IDE0052 // Remove unread private members
     [SerializeField] private PlayerStates playerState;
+#pragma warning restore IDE0052 // Remove unread private members
     [SerializeField] private RaycastHit slopeHit;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private Transform orientation;
@@ -28,8 +30,8 @@ public class p_movement : MonoBehaviour
     private float currentMovementSpeed;
 
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
-    private bool isGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
-    private bool isWalking => _rb.velocity != Vector3.zero;
+    private bool IsGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
+    private bool IsWalking => _rb.velocity != Vector3.zero;
     
     void Awake()
     {
@@ -42,7 +44,7 @@ public class p_movement : MonoBehaviour
     private void Update()
     {
         _rb.useGravity = !OnSlope();
-        if (isGrounded) _rb.drag = groundDrag;
+        if (IsGrounded) _rb.drag = groundDrag;
         else
         {
             _rb.drag = 0;
@@ -69,14 +71,14 @@ public class p_movement : MonoBehaviour
     // Add rest of the states in state handler.
     public void StateHandler()
     {
-        if(!isWalking && isGrounded){
+        if(!IsWalking && IsGrounded){
             playerState = PlayerStates.IDLE;
         }
-        else if (isWalking && isGrounded)
+        else if (IsWalking && IsGrounded)
         {
             playerState = PlayerStates.WALKING;
         }
-        else if (currentMovementSpeed <= regularMovementSpeed && isGrounded)
+        else if (currentMovementSpeed <= regularMovementSpeed && IsGrounded)
         {
             playerState = PlayerStates.SILENTWALKING;
         }
@@ -108,16 +110,16 @@ public class p_movement : MonoBehaviour
     {
         moveDirection = Vector3.zero;
         moveDirection = orientation.forward * input.y + orientation.right * input.x;
-        _rb.AddForce(moveDirection.normalized * currentMovementSpeed * 10f,ForceMode.Force);
+        _rb.AddForce(10f * currentMovementSpeed * moveDirection.normalized,ForceMode.Force);
     }
     public void HandleMovement(Vector3 direction)
     {
-        _rb.AddForce(direction.normalized * currentMovementSpeed * 20f, ForceMode.Force);
+        _rb.AddForce(20f * currentMovementSpeed * direction.normalized, ForceMode.Force);
     }
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(_rb.velocity.x,0f,_rb.velocity.z);
+        Vector3 flatVel = new(_rb.velocity.x,0f,_rb.velocity.z);
 
         if(flatVel.magnitude > currentMovementSpeed)
         {
@@ -127,7 +129,7 @@ public class p_movement : MonoBehaviour
     }
     public void Jump()
     {
-        if(isGrounded){
+        if(IsGrounded){
             _rb.mass = defaultMass;
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
             _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -137,7 +139,7 @@ public class p_movement : MonoBehaviour
     {
         currentMovementSpeed = silentMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-        if (isGrounded) _rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
+        if (IsGrounded) _rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
     }
     public void StopCrouch()
     {

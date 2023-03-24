@@ -6,8 +6,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private ResetBiocharge ResetCharge;
     [SerializeField] private CarryObject CarryObject;
     [SerializeField] private Flashlight FlashlightObject;
-    [SerializeField] private p_movement MovementScriptObject;
-    [SerializeField] private p_look LookScriptObject;
+    [SerializeField] private P_movement MovementScriptObject;
+    [SerializeField] private P_look LookScriptObject;
 
  
     private void Awake()

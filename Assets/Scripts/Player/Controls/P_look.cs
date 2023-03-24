@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class p_look : MonoBehaviour
+public class P_look : MonoBehaviour
 {
     [SerializeField] private Transform orientation;
     [SerializeField] private Transform pBody;
+    [SerializeField] private CarryObject carryObject;
     [SerializeField] private float SenX; 
     [SerializeField] private float SenY;
-    private float xRotation;
+    public float xRotation { get; private set; }
     private float yRotation;
 
     void Awake()
     {
-        pBody = FindObjectOfType<p_movement>().transform;
+        pBody = FindObjectOfType<P_movement>().transform;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -23,9 +24,15 @@ public class p_look : MonoBehaviour
 
         xRotation -= mouseY;
         yRotation += mouseX;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        transform.localRotation = Quaternion.Euler(xRotation,yRotation,0);//xRotation
+        if (carryObject._grabbedRB)
+        {
+            xRotation = Mathf.Clamp(xRotation, -40f, 40f);
+        }
+        else
+        {
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        }
+        transform.localRotation = Quaternion.Euler(xRotation,yRotation,0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
         pBody.rotation = Quaternion.Euler(0,yRotation,0);
     }
