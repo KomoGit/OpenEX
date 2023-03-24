@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using System.Collections;
 
@@ -23,7 +22,6 @@ public class AbilityManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         BiocellCharge -= drainRate;
-        Debug.Log("Current charge is: " + BiocellCharge);
         if(BiocellCharge >= 0)
         {
             DecreaseEnergy(drainRate);

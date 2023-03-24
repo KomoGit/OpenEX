@@ -2,11 +2,9 @@ using UnityEngine;
 
 public class Flashlight : MonoBehaviour,IAbility
 {
-    //This is a temporary measure made by me. The ability will be changed and I will make a Interface for all ability scripts to follow.
     [SerializeField] AbilityManager AbilityManager;
     [SerializeField] Light Light;
     [SerializeField] private float DrainRate;
-    //[SerializeField] AudioSource m_AudioSource;
     [SerializeField] private AudioClip FlashlightSFX;
     private bool FlashlightEnabled = false;
 
@@ -30,7 +28,6 @@ public class Flashlight : MonoBehaviour,IAbility
         if (FlashlightEnabled == false && AbilityManager.BiocellCharge != 0)
         {
             FlashlightEnabled = true;
-            //AbilityDrain();
         }
         else
         {
