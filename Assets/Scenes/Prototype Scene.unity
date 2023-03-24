@@ -5328,7 +5328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97855953401c2254fb0e5590462bdb8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _carryObject: {fileID: 8344611502805901213}
+  ResetCharge: {fileID: 1494404792}
+  CarryObject: {fileID: 8344611502805901213}
   FlashlightObject: {fileID: 8344611502805901212}
   MovementScriptObject: {fileID: 1494404789}
   LookScriptObject: {fileID: 2025418231}
@@ -5340,7 +5341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198907933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.85, y: 3.2599957, z: 10.17}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5392,6 +5393,7 @@ GameObject:
   - component: {fileID: 1494404785}
   - component: {fileID: 1494404790}
   - component: {fileID: 1494404789}
+  - component: {fileID: 1494404792}
   - component: {fileID: 1494404791}
   m_Layer: 0
   m_Name: Capsule
@@ -5537,6 +5539,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BiocellCharge: 100
+--- !u!114 &1494404792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494404784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54fb1308b8ee8c74db678526d08953f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1553261630
 Mesh:
   m_ObjectHideFlags: 0

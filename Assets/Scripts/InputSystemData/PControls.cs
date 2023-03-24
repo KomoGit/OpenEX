@@ -290,6 +290,34 @@ public partial class @PControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug Keys"",
+            ""id"": ""17d98ca3-aa58-4a04-8073-ba7bbe5e56ba"",
+            ""actions"": [
+                {
+                    ""name"": ""Reset Energy"",
+                    ""type"": ""Button"",
+                    ""id"": ""e17d99b8-12bd-4497-bf9f-398df1061647"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""02bd8d8c-08b4-4232-b314-22176d0c310e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset Energy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -310,6 +338,9 @@ public partial class @PControls: IInputActionCollection2, IDisposable
         // Abilities
         m_Abilities = asset.FindActionMap("Abilities", throwIfNotFound: true);
         m_Abilities_Flashlight = m_Abilities.FindAction("Flashlight", throwIfNotFound: true);
+        // Debug Keys
+        m_DebugKeys = asset.FindActionMap("Debug Keys", throwIfNotFound: true);
+        m_DebugKeys_ResetEnergy = m_DebugKeys.FindAction("Reset Energy", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -561,6 +592,52 @@ public partial class @PControls: IInputActionCollection2, IDisposable
         }
     }
     public AbilitiesActions @Abilities => new AbilitiesActions(this);
+
+    // Debug Keys
+    private readonly InputActionMap m_DebugKeys;
+    private List<IDebugKeysActions> m_DebugKeysActionsCallbackInterfaces = new List<IDebugKeysActions>();
+    private readonly InputAction m_DebugKeys_ResetEnergy;
+    public struct DebugKeysActions
+    {
+        private @PControls m_Wrapper;
+        public DebugKeysActions(@PControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ResetEnergy => m_Wrapper.m_DebugKeys_ResetEnergy;
+        public InputActionMap Get() { return m_Wrapper.m_DebugKeys; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugKeysActions set) { return set.Get(); }
+        public void AddCallbacks(IDebugKeysActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DebugKeysActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DebugKeysActionsCallbackInterfaces.Add(instance);
+            @ResetEnergy.started += instance.OnResetEnergy;
+            @ResetEnergy.performed += instance.OnResetEnergy;
+            @ResetEnergy.canceled += instance.OnResetEnergy;
+        }
+
+        private void UnregisterCallbacks(IDebugKeysActions instance)
+        {
+            @ResetEnergy.started -= instance.OnResetEnergy;
+            @ResetEnergy.performed -= instance.OnResetEnergy;
+            @ResetEnergy.canceled -= instance.OnResetEnergy;
+        }
+
+        public void RemoveCallbacks(IDebugKeysActions instance)
+        {
+            if (m_Wrapper.m_DebugKeysActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDebugKeysActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DebugKeysActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DebugKeysActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DebugKeysActions @DebugKeys => new DebugKeysActions(this);
     public interface IPlayerActions
     {
         void OnInteract(InputAction.CallbackContext context);
@@ -579,5 +656,9 @@ public partial class @PControls: IInputActionCollection2, IDisposable
     public interface IAbilitiesActions
     {
         void OnFlashlight(InputAction.CallbackContext context);
+    }
+    public interface IDebugKeysActions
+    {
+        void OnResetEnergy(InputAction.CallbackContext context);
     }
 }

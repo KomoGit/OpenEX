@@ -4,12 +4,13 @@ using System.Collections;
 
 public class AbilityManager : MonoBehaviour
 {
-    [SerializeField] private float BiocellCharge;
+    [SerializeField] public float BiocellCharge;
     public bool IsEnergyDepleted(float drainRate)
     {  
         if (BiocellCharge <= 0)
         {
-            return true;         
+            StopAllCoroutines();
+            return true;   
         }
         else
         {

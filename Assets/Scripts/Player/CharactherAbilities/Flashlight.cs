@@ -27,7 +27,7 @@ public class Flashlight : MonoBehaviour,IAbility
 
     public void AbilityActivate()
     {
-        if (FlashlightEnabled == false)
+        if (FlashlightEnabled == false && AbilityManager.BiocellCharge != 0)
         {
             FlashlightEnabled = true;
             //AbilityDrain();
