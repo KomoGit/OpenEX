@@ -11,15 +11,19 @@ public class CarryObject : MonoBehaviour,IAbility
     [SerializeField] private float maxWeight = 2f; //We can make this into an array, so as player upgrades the value will change.
     [SerializeField] private float lerpSpeed = 100f;
     [SerializeField] private float throwForce = 20f;
- 
+
     private GameObject _objectHeld = default;
     private Rigidbody _grabbedRB;
     private float AlphaNonT = 1f, AlphaTransparent = 0.5f;
 
-    private void FixedUpdate()
+    private void Update()
     {
-        HoldObject();
         IgnorePlayerCollission();
+    }
+    private void FixedUpdate()
+    {   
+        HoldObject();      
+        ClampItemHolder();
     }
     public void AbilityActivate()
     {
@@ -46,7 +50,7 @@ public class CarryObject : MonoBehaviour,IAbility
     {
         RaycastHit hit;
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        if (Physics.Raycast(ray, out hit, maxGrabDistance))
+        if (Physics.Raycast(ray, out hit, maxGrabDistance) && hit.rigidbody.mass <= maxWeight)
         {
             _grabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
             if (_grabbedRB)
@@ -57,7 +61,7 @@ public class CarryObject : MonoBehaviour,IAbility
     }
     private void HoldObject()
     {
-        if (_grabbedRB && _grabbedRB.mass <= maxWeight) 
+        if (_grabbedRB) // && _grabbedRB.mass <= maxWeight
         {
             _grabbedRB.MovePosition(Vector3.Lerp(_grabbedRB.position, _objectHolder.transform.position, Time.deltaTime * lerpSpeed));
         }
@@ -72,14 +76,16 @@ public class CarryObject : MonoBehaviour,IAbility
         if (_grabbedRB)
         {
             _objectHeld = _grabbedRB.gameObject;
-            Physics.IgnoreCollision(_grabbedRB.GetComponent<Collider>(), _playerCollider.GetComponent<Collider>());
+            //Physics.IgnoreCollision(_grabbedRB.GetComponent<Collider>(), _playerCollider.GetComponent<Collider>());
+            _grabbedRB.GetComponent<Collider>().enabled = false;    
             ChangeAlpha(_grabbedRB.gameObject.GetComponent<Renderer>().material, AlphaTransparent);
         }
         else 
         {
             if (_objectHeld != null) 
             {
-                Physics.IgnoreCollision(_objectHeld.GetComponent<Collider>(), _playerCollider.GetComponent<Collider>(), false);
+                _objectHeld.GetComponent<Collider>().enabled = true;
+                //Physics.IgnoreCollision(_objectHeld.GetComponent<Collider>(), _playerCollider.GetComponent<Collider>(), false);
                 ChangeAlpha(_objectHeld.GetComponent<Renderer>().material, AlphaNonT);
             }         
         }
@@ -90,6 +96,10 @@ public class CarryObject : MonoBehaviour,IAbility
         Color oldColor = mat.color;
         Color newColor = new Color(oldColor.r, oldColor.g, oldColor.b, alphaVal);
         mat.SetColor("_Color", newColor);
+    }
+    private void ClampItemHolder() 
+    {
+        //_objectHolder.localPosition = 
     }
     public void ThrowObject()
     {
