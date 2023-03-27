@@ -13,7 +13,7 @@ public class CarryObject : MonoBehaviour,IAbility
     [SerializeField] private float throwForce = 20f;
 
     private GameObject _objectHeld = default;
-    public Rigidbody _grabbedRB { get; private set; }
+    public Rigidbody GrabbedRB { get; private set; }
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
 
     private void Update()
@@ -27,7 +27,7 @@ public class CarryObject : MonoBehaviour,IAbility
     }
     public void AbilityActivate()
     {
-        if (_grabbedRB)
+        if (GrabbedRB)
         {
             DropObject();
         }
@@ -43,40 +43,40 @@ public class CarryObject : MonoBehaviour,IAbility
 
     private void DropObject()
     {
-        _grabbedRB.isKinematic = false;
-        _grabbedRB = null;
+        GrabbedRB.isKinematic = false;
+        GrabbedRB = null;
     }
     private void CheckObject()
     {
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody.mass <= maxWeight)
         {
-            _grabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
-            if (_grabbedRB)
+            GrabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
+            if (GrabbedRB)
             {
-                _grabbedRB.isKinematic = true;
+                GrabbedRB.isKinematic = true;
             }
         }
     }
     private void HoldObject()
     {
-        if (_grabbedRB) // && _grabbedRB.mass <= maxWeight
+        if (GrabbedRB) // && _grabbedRB.mass <= maxWeight
         {
-            _grabbedRB.MovePosition(Vector3.Lerp(_grabbedRB.position, _objectHolder.transform.position, Time.deltaTime * lerpSpeed));
+            GrabbedRB.MovePosition(Vector3.Lerp(GrabbedRB.position, _objectHolder.transform.position, Time.deltaTime * lerpSpeed));
         }
-        else if (_grabbedRB && _grabbedRB.mass >= maxWeight)
+        else if (GrabbedRB && GrabbedRB.mass >= maxWeight)
         {
-            _grabbedRB.isKinematic = false;
-            _grabbedRB = null;
+            GrabbedRB.isKinematic = false;
+            GrabbedRB = null;
         }
     }
     private void IgnorePlayerCollission()
     {
-        if (_grabbedRB)
+        if (GrabbedRB)
         {
-            _objectHeld = _grabbedRB.gameObject;
-            _grabbedRB.GetComponent<Collider>().enabled = false;    
-            ChangeAlpha(_grabbedRB.gameObject.GetComponent<Renderer>().material, AlphaTransparent);
+            _objectHeld = GrabbedRB.gameObject;
+            GrabbedRB.GetComponent<Collider>().enabled = false;    
+            ChangeAlpha(GrabbedRB.gameObject.GetComponent<Renderer>().material, AlphaTransparent);
         }
         else 
         {
@@ -96,11 +96,11 @@ public class CarryObject : MonoBehaviour,IAbility
     }
     public void ThrowObject()
     {
-        if (_grabbedRB)
+        if (GrabbedRB)
         {
-            _grabbedRB.isKinematic = false;
-            _grabbedRB.AddForce(_camera.transform.forward * throwForce / _grabbedRB.mass, ForceMode.VelocityChange);
-            _grabbedRB = null;
+            GrabbedRB.isKinematic = false;
+            GrabbedRB.AddForce(_camera.transform.forward * throwForce / GrabbedRB.mass, ForceMode.VelocityChange);
+            GrabbedRB = null;
         }       
     }
 }

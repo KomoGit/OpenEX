@@ -24,7 +24,7 @@ public class P_look : MonoBehaviour
 
         xRotation -= mouseY;
         yRotation += mouseX;
-        if (carryObject._grabbedRB)
+        if (carryObject.GrabbedRB)
         {
             xRotation = Mathf.Clamp(xRotation, -40f, 40f);
         }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AbilityManager : MonoBehaviour
 {
-    [SerializeField] public float BiocellCharge;
+    public float BiocellCharge;
     public bool IsEnergyDepleted(float drainRate)
     {  
         if (BiocellCharge <= 0)
@@ -24,7 +24,7 @@ public class AbilityManager : MonoBehaviour
         BiocellCharge -= drainRate;
         if(BiocellCharge >= 0)
         {
-            DecreaseEnergy(drainRate);
+            StartCoroutine(DecreaseEnergy(drainRate));
         }
     }
 }

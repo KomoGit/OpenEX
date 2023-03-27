@@ -2615,7 +2615,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24560
+  m_Name: pb_Mesh24584
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4252,11 +4252,12 @@ MonoBehaviour:
   regularMovementSpeed: 5
   silentMovementSpeed: 2
   groundDrag: 5
+  coyoteTime: 0.2
   jumpForce: 5
   crouchYScale: 0.5
   slopeAdjustedMass: 5
   defaultMass: 1
-  playerHeight: 1
+  playerHeight: 2
   maxSlopeAngle: 45
 --- !u!1 &1618748089
 GameObject:

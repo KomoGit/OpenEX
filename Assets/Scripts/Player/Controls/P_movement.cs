@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -16,6 +17,7 @@ public class P_movement : MonoBehaviour
     [SerializeField] private float silentMovementSpeed;
     [SerializeField] private float groundDrag;
     [Header("Jump and Crouch")]
+    [SerializeField] private float coyoteTime;
     [SerializeField] private float jumpForce;
     [SerializeField] private float crouchYScale;
     [Header("Slope Handling")]
@@ -32,6 +34,7 @@ public class P_movement : MonoBehaviour
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
     private bool IsWalking => _rb.velocity != Vector3.zero;
+    private bool CoyoteTimerActive = false;
     
     void Awake()
     {
@@ -56,9 +59,18 @@ public class P_movement : MonoBehaviour
         else
         {
             _rb.mass = defaultMass;
-        }     
+        }
         StateHandler();
         SpeedControl();
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!IsGrounded)
+        {
+            CoyoteTimerActive = true;
+            Debug.Log(CoyoteTimerActive);
+            Invoke(nameof(DisableCoyoteTimer), coyoteTime);
+        }
     }
     private enum PlayerStates
     {
@@ -129,7 +141,7 @@ public class P_movement : MonoBehaviour
     }
     public void Jump()
     {
-        if(IsGrounded){
+        if(IsGrounded || CoyoteTimerActive){
             _rb.mass = defaultMass;
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
             _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -170,5 +182,8 @@ public class P_movement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
-
+    private void DisableCoyoteTimer()
+    {
+        CoyoteTimerActive = false;
+    }
 }
