@@ -16,10 +16,14 @@ public class CarryObject : MonoBehaviour,IAbility
     public Rigidbody _grabbedRB { get; private set; }
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
 
+    private void Update()
+    {
+        HoldObject();
+    }
     private void FixedUpdate()
     {
         IgnorePlayerCollission();
-        HoldObject();      
+        //HoldObject();      
     }
     public void AbilityActivate()
     {
