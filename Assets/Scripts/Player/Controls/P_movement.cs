@@ -20,7 +20,7 @@ public class P_movement : MonoBehaviour
     [SerializeField] private float crouchYScale;
     [Header("Slope Handling")]
     [SerializeField] private float slopeAdjustedMass;
-    [SerializeField] private float defaultMass; 
+    [SerializeField] private float defaultMass;
     [SerializeField] private float playerHeight;
     [SerializeField] private float maxSlopeAngle;
     private Transform playerTransform;
@@ -30,7 +30,7 @@ public class P_movement : MonoBehaviour
     private float currentMovementSpeed;
 
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
-    private bool IsGrounded => Physics.Raycast(transform.position,Vector3.down,1.2f,whatIsGround);
+    public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
     private bool IsWalking => _rb.velocity != Vector3.zero;
     
     void Awake()
@@ -127,7 +127,6 @@ public class P_movement : MonoBehaviour
             _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
         }
     }
-    //Some change
     public void Jump()
     {
         if(IsGrounded){
