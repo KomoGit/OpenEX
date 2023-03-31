@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Footsteps/GRASS
+  - Footsteps/CARPET
+  - Footsteps/WOOD
+  - Footsteps/TILE
+  - Footsteps/METAL
+  - Footsteps/WATER
+  - Footsteps/STONE
   layers:
   - Default
   - TransparentFX

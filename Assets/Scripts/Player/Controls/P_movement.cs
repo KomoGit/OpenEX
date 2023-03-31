@@ -1,17 +1,15 @@
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(PlayerAudio))]
 public class P_movement : MonoBehaviour
 {
     [Header("Player Configures")]
-#pragma warning disable IDE0052 // Remove unread private members
     [SerializeField] private PlayerStates playerState;
-#pragma warning restore IDE0052 // Remove unread private members
     [SerializeField] private RaycastHit slopeHit;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private Transform orientation;
+    [SerializeField] public Transform orientation;
     [Header("Speed and Force")]
     [SerializeField] private float regularMovementSpeed;
     [SerializeField] private float silentMovementSpeed;
@@ -33,7 +31,9 @@ public class P_movement : MonoBehaviour
 
     //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
-    private bool IsWalking => _rb.velocity != Vector3.zero;
+    [HideInInspector] public bool IsWalking => _rb.velocity != Vector3.zero;
+    [HideInInspector] public bool IsCrouching = false;
+    [HideInInspector] public bool IsSilentWalking = false;
     private bool CoyoteTimerActive = false;
     
     void Awake()
@@ -86,11 +86,15 @@ public class P_movement : MonoBehaviour
         if(!IsWalking && IsGrounded){
             playerState = PlayerStates.IDLE;
         }
-        else if (IsWalking && IsGrounded)
+        else if (IsCrouching)
+        {
+            playerState = PlayerStates.CROUCHING;
+        }
+        else if (IsWalking && !IsSilentWalking)
         {
             playerState = PlayerStates.WALKING;
         }
-        else if (currentMovementSpeed <= regularMovementSpeed && IsGrounded)
+        else if (IsSilentWalking)
         {
             playerState = PlayerStates.SILENTWALKING;
         }
@@ -149,23 +153,27 @@ public class P_movement : MonoBehaviour
     }
     public void Crouch()
     {
+        IsCrouching = true;
         currentMovementSpeed = silentMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         if (IsGrounded) _rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
     }
     public void StopCrouch()
     {
+        IsCrouching = false;
         currentMovementSpeed = regularMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, startYScale, 1);
     }
 
     public void SilentWalk()
     {
+        IsSilentWalking = true;
         currentMovementSpeed = silentMovementSpeed;
     }
 
     public void StopSilentWalk()
     {
+        IsSilentWalking = false;
         currentMovementSpeed = regularMovementSpeed; 
     }
     public bool OnSlope()
