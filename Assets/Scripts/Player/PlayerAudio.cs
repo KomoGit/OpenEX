@@ -29,7 +29,8 @@ public class PlayerAudio : MonoBehaviour
     {
         HandleFootsteps();    
     }
-
+    //CURRENT BUG, on slopes the footstep audio won't cut. IsWalking can be transferred into Vector2 that is being sent out 
+    //by the AbilityManager to check if there is input.
     private void HandleFootsteps()
     {
         if (!playerScript.IsGrounded) return;
@@ -51,9 +52,9 @@ public class PlayerAudio : MonoBehaviour
                     case "Footsteps/GRASS":
                         footstepAudioSource.PlayOneShot(grassClips[Random.Range(0, grassClips.Length - 1)]);
                         break;
-                    /*case "Footsteps/STONE":
-                        footstepAudioSource.PlayOneShot(woodClips[Random.Range(0, stoneClips.Length - 1)]);
-                        break;*/
+                    case "Footsteps/STONE":
+                        footstepAudioSource.PlayOneShot(stoneClips[Random.Range(0, stoneClips.Length - 1)]);
+                        break;
                     case "Footsteps/METAL":
                         footstepAudioSource.PlayOneShot(metalClips[Random.Range(0, metalClips.Length - 1)]);
                         break;
@@ -67,6 +68,7 @@ public class PlayerAudio : MonoBehaviour
                         footstepAudioSource.PlayOneShot(waterClips[Random.Range(0, waterClips.Length - 1)]);
                         break;
                     default:
+                        Debug.Log("Warning, no tag has been added to this object.");
                         footstepAudioSource.PlayOneShot(stoneClips[Random.Range(0, stoneClips.Length - 1)]);
                         break;
                 }

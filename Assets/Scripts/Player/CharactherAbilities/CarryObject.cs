@@ -49,7 +49,7 @@ public class CarryObject : MonoBehaviour,IAbility
     private void CheckObject()
     {
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody.mass <= maxWeight)
+        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody !=null && hit.rigidbody.mass <= maxWeight)
         {
             GrabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
             if (GrabbedRB)

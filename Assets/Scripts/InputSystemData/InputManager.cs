@@ -23,7 +23,6 @@ public class InputManager : MonoBehaviour
         _ctrl.Player.SilentWalk.canceled += _ => MovementScriptObject.StopSilentWalk();
         _ctrl.DebugKeys.ResetEnergy.started += _ => ResetCharge.SetEnergyFull();
     }
-
     private void Update()
     {
         Vector2 mouseVector = _ctrl.Player.Mouse.ReadValue<Vector2>();
@@ -33,7 +32,6 @@ public class InputManager : MonoBehaviour
             MyInput();
         }
     }
-
     private void MyInput()
     {
         Vector2 playerVector = _ctrl.Player.Movement.ReadValue<Vector2>();
@@ -43,7 +41,6 @@ public class InputManager : MonoBehaviour
         }
         MovementScriptObject.HandleMovement(playerVector);
     }
-
     //New input system boilerplate.
     private void OnEnable() => _ctrl.Enable();
     private void OnDisable() => _ctrl.Disable();

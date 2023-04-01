@@ -28,14 +28,11 @@ public class P_movement : MonoBehaviour
     private Vector3 moveDirection;
     private float startYScale;
     private float currentMovementSpeed;
-
-    //These two booleans are used for state machine. But I think they are redundant so best to find a better way to replace them
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
-    [HideInInspector] public bool IsWalking => _rb.velocity != Vector3.zero;
+    [HideInInspector] public bool IsWalking => _rb.velocity.x != 0;
     [HideInInspector] public bool IsCrouching = false;
     [HideInInspector] public bool IsSilentWalking = false;
     private bool CoyoteTimerActive = false;
-    
     void Awake()
     {
         currentMovementSpeed = regularMovementSpeed;
@@ -68,19 +65,19 @@ public class P_movement : MonoBehaviour
         if (!IsGrounded)
         {
             CoyoteTimerActive = true;
-            Debug.Log(CoyoteTimerActive);
             Invoke(nameof(DisableCoyoteTimer), coyoteTime);
         }
     }
-    private enum PlayerStates
+    public enum PlayerStates
     {
         IDLE,
         WALKING,
         AIR,
         CROUCHING,
-        SILENTWALKING
+        SILENTWALKING,
+        SWIMMING
     }
-    // Add rest of the states in state handler.
+    // The states written here are only for debug purposes. In prod code, these can be safely removed.
     public void StateHandler()
     {
         if(!IsWalking && IsGrounded){
@@ -103,25 +100,6 @@ public class P_movement : MonoBehaviour
             playerState = PlayerStates.AIR;
         }
     }
-    //Will be used in abilities. It will allow us to change speed or jump force on duration of ability being used.
-    public void SetData(string index,float change)
-    {
-        string formattedIndex = index.ToLower();
-        switch(formattedIndex){
-            case "movementspeed":
-            regularMovementSpeed = change;
-            break;
-            case "jumpforce":
-            jumpForce = change;
-            break;
-            case "silentwalkspeed":
-            silentMovementSpeed = change;
-            break;
-            default:
-            Debug.Log("Data: " + index + " not found.");
-            break;
-        }
-    }
     public void HandleMovement(Vector2 input)
     {
         moveDirection = Vector3.zero;
@@ -132,7 +110,6 @@ public class P_movement : MonoBehaviour
     {
         _rb.AddForce(20f * currentMovementSpeed * direction.normalized, ForceMode.Force);
     }
-
     private void SpeedControl()
     {
         Vector3 flatVel = new(_rb.velocity.x,0f,_rb.velocity.z);
@@ -164,7 +141,6 @@ public class P_movement : MonoBehaviour
         currentMovementSpeed = regularMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, startYScale, 1);
     }
-
     public void SilentWalk()
     {
         IsSilentWalking = true;
@@ -185,7 +161,6 @@ public class P_movement : MonoBehaviour
         }
         return false;
     }
-
     public Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
