@@ -15,10 +15,10 @@ public class CarryObject : MonoBehaviour,IAbility
     [SerializeField] private float throwForce = 20f;
 
     private GameObject _objectHeld = default;
-    public Rigidbody GrabbedRB { get; private set; }
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
-
     private bool canUseAbility = true;
+
+    public Rigidbody GrabbedRB { get; private set; }
 
     private void Update()
     {
@@ -35,7 +35,7 @@ public class CarryObject : MonoBehaviour,IAbility
     }
     public void AbilityDrain()
     {
-        
+        //Not yet implemented.
     }
     private void CheckObject()
     {
