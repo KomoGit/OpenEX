@@ -8,8 +8,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Flashlight FlashlightObject;
     [SerializeField] private P_movement MovementScriptObject;
     [SerializeField] private P_look LookScriptObject;
+    public static Vector2 PlayerVector { get; private set; } //Not sure if this is spaghetti code, but this is being accessed by p_movement where it is accessed by this script.
 
- 
+
     private void Awake()
     {
         _ctrl = new PControls();
@@ -34,12 +35,12 @@ public class InputManager : MonoBehaviour
     }
     private void MyInput()
     {
-        Vector2 playerVector = _ctrl.Player.Movement.ReadValue<Vector2>();
+        PlayerVector = _ctrl.Player.Movement.ReadValue<Vector2>();
         if (MovementScriptObject.OnSlope())
         {
             MovementScriptObject.HandleMovement(MovementScriptObject.GetSlopeMoveDirection());
         }
-        MovementScriptObject.HandleMovement(playerVector);
+        MovementScriptObject.HandleMovement(PlayerVector);
     }
     //New input system boilerplate.
     private void OnEnable() => _ctrl.Enable();

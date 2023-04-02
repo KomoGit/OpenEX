@@ -29,7 +29,7 @@ public class P_movement : MonoBehaviour
     private float startYScale;
     private float currentMovementSpeed;
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
-    [HideInInspector] public bool IsWalking => _rb.velocity.x != 0;
+    [HideInInspector] public bool IsWalking => InputManager.PlayerVector != Vector2.zero; //_rb.velocity.x != 0;
     [HideInInspector] public bool IsCrouching = false;
     [HideInInspector] public bool IsSilentWalking = false;
     private bool CoyoteTimerActive = false;
