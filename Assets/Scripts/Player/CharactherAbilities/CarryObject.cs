@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CarryObject : MonoBehaviour,IAbility 
@@ -7,6 +8,7 @@ public class CarryObject : MonoBehaviour,IAbility
     [SerializeField] private Camera _camera;
     [SerializeField] private Transform _objectHolder;
     [Header("Values")]
+    [SerializeField] private float abilityCooldownTimer = 1f;
     [SerializeField] private float maxGrabDistance = 10f;
     [SerializeField] private float maxWeight = 2f; //We can make this into an array, so as player upgrades the value will change.
     [SerializeField] private float lerpSpeed = 100f;
@@ -16,42 +18,32 @@ public class CarryObject : MonoBehaviour,IAbility
     public Rigidbody GrabbedRB { get; private set; }
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
 
+    private bool canUseAbility = true;
+
     private void Update()
     {
         HoldObject();
     }
     private void FixedUpdate()
     {
-        IgnorePlayerCollission();
-        //HoldObject();      
+        IgnorePlayerCollission();  
     }
     public void AbilityActivate()
     {
-        if (GrabbedRB)
-        {
-            DropObject();
-        }
-        else
-        {
-            CheckObject();
-        }
+        if (GrabbedRB) DropObject();
+        else CheckObject();
     }
     public void AbilityDrain()
     {
         
     }
-
-    private void DropObject()
-    {
-        GrabbedRB.isKinematic = false;
-        GrabbedRB = null;
-    }
     private void CheckObject()
     {
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody !=null && hit.rigidbody.mass <= maxWeight)
+        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody !=null && canUseAbility && hit.rigidbody.mass <= maxWeight)//Has too many parameters.
         {
             GrabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
+            canUseAbility = false;
             if (GrabbedRB)
             {
                 GrabbedRB.isKinematic = true;
@@ -68,6 +60,22 @@ public class CarryObject : MonoBehaviour,IAbility
         {
             GrabbedRB.isKinematic = false;
             GrabbedRB = null;
+        }
+    }
+    private void DropObject()
+    {
+        GrabbedRB.isKinematic = false;
+        GrabbedRB = null;
+        StartCoroutine(ResetAbility());
+    }
+    public void ThrowObject()
+    {
+        if (GrabbedRB)
+        {
+            GrabbedRB.isKinematic = false;
+            GrabbedRB.AddForce(_camera.transform.forward * throwForce / GrabbedRB.mass, ForceMode.VelocityChange);
+            GrabbedRB = null;
+            StartCoroutine(ResetAbility());
         }
     }
     private void IgnorePlayerCollission()
@@ -94,13 +102,9 @@ public class CarryObject : MonoBehaviour,IAbility
         Color newColor = new (oldColor.r, oldColor.g, oldColor.b, alphaVal);
         mat.SetColor("_Color", newColor);
     }
-    public void ThrowObject()
+    private IEnumerator ResetAbility()
     {
-        if (GrabbedRB)
-        {
-            GrabbedRB.isKinematic = false;
-            GrabbedRB.AddForce(_camera.transform.forward * throwForce / GrabbedRB.mass, ForceMode.VelocityChange);
-            GrabbedRB = null;
-        }       
+        yield return new WaitForSeconds(abilityCooldownTimer);
+        canUseAbility = true;
     }
 }
