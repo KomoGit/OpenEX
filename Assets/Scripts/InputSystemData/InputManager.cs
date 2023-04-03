@@ -3,6 +3,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     private PControls _ctrl;
+    [SerializeField] private P_Interact InteractWithObject;
     [SerializeField] private ResetBiocharge ResetCharge;
     [SerializeField] private CarryObject CarryObject;
     [SerializeField] private Flashlight FlashlightObject;
@@ -16,6 +17,8 @@ public class InputManager : MonoBehaviour
         _ctrl = new PControls();
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();
+        _ctrl.Player.Interact.started += _ => InteractWithObject.Interact();
+        //_ctrl.Player.Interact.started += _ => interactive.Activate();
         _ctrl.Player.Shoot.started += _ => CarryObject.ThrowObject();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
         _ctrl.Player.Crouch.canceled += _ => MovementScriptObject.StopCrouch();

@@ -17,7 +17,6 @@ public class CarryObject : MonoBehaviour,IAbility
     private GameObject _objectHeld = default;
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
     private bool canUseAbility = true;
-
     public Rigidbody GrabbedRB { get; private set; }
 
     private void Update()
