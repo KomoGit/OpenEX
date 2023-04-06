@@ -3,7 +3,7 @@ using UnityEngine;
 public class P_Interact : MonoBehaviour
 {
     [SerializeField] private Camera _playerCam;
-    [SerializeField] private InputManager _movement;
+    private InputManager _movement;
 
     private void Awake()
     {

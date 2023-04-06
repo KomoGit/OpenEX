@@ -31,7 +31,10 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         Vector2 mouseVector = _ctrl.Player.Mouse.ReadValue<Vector2>();
-        LookScriptObject.MouseLook(mouseVector);
+        if (allowPlayerMovement)
+        {
+            LookScriptObject.MouseLook(mouseVector);
+        }     
         if (MovementScriptObject.IsGrounded && allowPlayerMovement) 
         {
             MyInput();
