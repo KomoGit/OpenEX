@@ -3,11 +3,11 @@ using UnityEngine;
 public class P_Interact : MonoBehaviour
 {
     [SerializeField] private Camera _playerCam;
-    [SerializeField] private P_movement _movement;
+    [SerializeField] private InputManager _movement;
 
     private void Awake()
     {
-        _movement = FindObjectOfType<P_movement>();
+        _movement = FindObjectOfType<InputManager>();
     }
     public void CheckInteractiveObject()
     {
@@ -19,19 +19,18 @@ public class P_Interact : MonoBehaviour
                 Interact(interactiveObject);
             }
         }
-    }
-    
+    } 
     private void Interact(IInteractive _intr)
     {
         if (_intr.IsActivated())
         {
             _intr.Deactivate();
-            _movement.enabled = true;
+            _movement.allowPlayerMovement = true;
         }
         else
         {
             _intr.Activate();
-            _movement.enabled = false;
+            _movement.allowPlayerMovement = false;
         }
     }
 }
