@@ -17,7 +17,7 @@ public class InputManager : MonoBehaviour
         _ctrl = new PControls();
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();
-        _ctrl.Player.Interact.started += _ => InteractWithObject.Interact();
+        _ctrl.Player.Interact.started += _ => InteractWithObject.CheckInteractiveObject();
         //_ctrl.Player.Interact.started += _ => interactive.Activate();
         _ctrl.Player.Shoot.started += _ => CarryObject.ThrowObject();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
