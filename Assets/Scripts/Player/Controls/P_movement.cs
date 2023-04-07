@@ -65,6 +65,7 @@ public class P_movement : MonoBehaviour
         if (!IsGrounded)
         {
             CoyoteTimerActive = true;
+            //Debug.Log("Coyote Timer - " + CoyoteTimerActive);
             Invoke(nameof(DisableCoyoteTimer), coyoteTime);
         }
     }
@@ -126,6 +127,7 @@ public class P_movement : MonoBehaviour
             _rb.mass = defaultMass;
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
             _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            CoyoteTimerActive = false;
         }
     }
     public void Crouch()
