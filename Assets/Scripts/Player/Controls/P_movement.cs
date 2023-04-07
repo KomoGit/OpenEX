@@ -9,7 +9,7 @@ public class P_movement : MonoBehaviour
     [SerializeField] private PlayerStates playerState;
     [SerializeField] private RaycastHit slopeHit;
     [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] public Transform orientation;
+    public Transform orientation;
     [Header("Speed and Force")]
     [SerializeField] private float regularMovementSpeed;
     [SerializeField] private float silentMovementSpeed;
@@ -29,7 +29,7 @@ public class P_movement : MonoBehaviour
     private float startYScale;
     private float currentMovementSpeed;
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
-    [HideInInspector] public bool IsWalking => InputManager.PlayerVector != Vector2.zero; //_rb.velocity.x != 0;
+    public bool IsWalking => InputManager.PlayerVector != Vector2.zero;
     [HideInInspector] public bool IsCrouching = false;
     [HideInInspector] public bool IsSilentWalking = false;
     private bool CoyoteTimerActive = false;
@@ -65,7 +65,6 @@ public class P_movement : MonoBehaviour
         if (!IsGrounded)
         {
             CoyoteTimerActive = true;
-            //Debug.Log("Coyote Timer - " + CoyoteTimerActive);
             Invoke(nameof(DisableCoyoteTimer), coyoteTime);
         }
     }
@@ -78,7 +77,6 @@ public class P_movement : MonoBehaviour
         SILENTWALKING,
         SWIMMING
     }
-    // The states written here are only for debug purposes. In prod code, these can be safely removed.
     public void StateHandler()
     {
         if(!IsWalking && IsGrounded){
@@ -148,7 +146,6 @@ public class P_movement : MonoBehaviour
         IsSilentWalking = true;
         currentMovementSpeed = silentMovementSpeed;
     }
-
     public void StopSilentWalk()
     {
         IsSilentWalking = false;

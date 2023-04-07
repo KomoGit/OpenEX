@@ -1,32 +1,37 @@
 using System;
 using UnityEngine;
-using System.Collections;
 
 public class AbilityManager : MonoBehaviour
 {
-    //public EventHandler AbilityActivated;
+    private Timer timer;
     public float BiocellCharge;
+
+    private void Awake()
+    {
+        timer = FindObjectOfType<Timer>();
+        timer.SecondPassed += OnSecondPassed;
+    }
+
     public bool IsEnergyDepleted(float drainRate)
     {  
         if (BiocellCharge <= 0)
         {
-            StopAllCoroutines();
             return true;   
         }
         else
         {
-            StartCoroutine(DecreaseEnergy(drainRate));
             return false;
         }
     }
-
-    private IEnumerator DecreaseEnergy(float drainRate)
+    private void OnSecondPassed(object sender, EventArgs e)
     {
-        yield return new WaitForSeconds(2);
-        BiocellCharge -= drainRate;
-        if(BiocellCharge >= 0) //This could be the reason why energy keeps decreasing even though ability is deactive.
+        DrainEnergy(1f);
+    }
+    private void DrainEnergy(float drainRate)
+    {
+        if(BiocellCharge != 0)
         {
-            StartCoroutine(DecreaseEnergy(drainRate));
-        }
+            BiocellCharge -= drainRate;
+        }       
     }
 }

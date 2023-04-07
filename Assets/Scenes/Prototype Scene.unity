@@ -2325,7 +2325,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24770
+  m_Name: pb_Mesh24772
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3004,7 +3004,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24784
+  m_Name: pb_Mesh24786
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5141,10 +5141,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 863064709}
-  - component: {fileID: 863064710}
   - component: {fileID: 8344611502805901212}
   - component: {fileID: 8344611502805901213}
   - component: {fileID: 8344611502805901214}
+  - component: {fileID: 8344611502805901215}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -5160,7 +5160,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863064708}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -103.6, y: 3.7799957, z: 101.2}
+  m_LocalPosition: {x: -103.6, y: 4.472, z: 101.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5168,19 +5168,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &863064710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863064708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07a6eaa6bab67944bbb6e1091634207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 1618748090}
 --- !u!1 &973003542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5559,6 +5546,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1198907935}
   - component: {fileID: 1198907934}
+  - component: {fileID: 1198907936}
+  - component: {fileID: 1198907937}
   m_Layer: 0
   m_Name: Input System Object
   m_TagString: Untagged
@@ -5599,6 +5588,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1198907936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198907933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecdb785bcbbf2b84c80b5a70dc7e0d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Duration: 100
+  isRunning: 0
+--- !u!114 &1198907937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198907933}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc4b23894533e24f9dd34a949cf69b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1316651287
 GameObject:
   m_ObjectHideFlags: 0
@@ -10969,8 +10984,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
+  timer: {fileID: 1198907936}
   Light: {fileID: 734998294}
-  DrainRate: 0.2
+  DrainRate: 1
   FlashlightSFX: {fileID: 0}
 --- !u!114 &8344611502805901213
 MonoBehaviour:
@@ -11005,3 +11021,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCam: {fileID: 2025418230}
+--- !u!114 &8344611502805901215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863064708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07a6eaa6bab67944bbb6e1091634207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1494404788}

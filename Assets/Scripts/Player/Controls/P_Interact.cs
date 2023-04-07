@@ -25,12 +25,12 @@ public class P_Interact : MonoBehaviour
         if (_intr.IsActivated())
         {
             _intr.Deactivate();
-            _movement.allowPlayerMovement = true;
+            _movement.AllowPlayerMovement = true;
         }
         else
         {
             _intr.Activate();
-            _movement.allowPlayerMovement = false;
+            _movement.AllowPlayerMovement = false;
         }
     }
 }

@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Flashlight FlashlightObject;
     [SerializeField] private P_movement MovementScriptObject;
     [SerializeField] private P_look LookScriptObject;
-    public bool allowPlayerMovement { private get; set; } = true;
+    public bool AllowPlayerMovement { private get; set; } = true;
     public static Vector2 PlayerVector { get; private set; } //Not sure if this is spaghetti code, but this is being accessed by p_movement where it is accessed by this script.
 
 
@@ -19,7 +19,6 @@ public class InputManager : MonoBehaviour
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();
         _ctrl.Player.Interact.started += _ => InteractWithObject.CheckInteractiveObject();
-        //_ctrl.Player.Interact.started += _ => interactive.Activate();
         _ctrl.Player.Shoot.started += _ => CarryObject.ThrowObject();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
         _ctrl.Player.Crouch.canceled += _ => MovementScriptObject.StopCrouch();
@@ -31,11 +30,11 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         Vector2 mouseVector = _ctrl.Player.Mouse.ReadValue<Vector2>();
-        if (allowPlayerMovement)
+        if (AllowPlayerMovement)
         {
             LookScriptObject.MouseLook(mouseVector);
         }     
-        if (MovementScriptObject.IsGrounded && allowPlayerMovement) 
+        if (MovementScriptObject.IsGrounded && AllowPlayerMovement) 
         {
             MyInput();
         }

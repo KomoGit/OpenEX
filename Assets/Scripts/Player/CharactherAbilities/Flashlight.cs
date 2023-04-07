@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Flashlight : MonoBehaviour,IAbility
 {
-    [SerializeField] AbilityManager AbilityManager;
-    [SerializeField] Light Light;
+    [SerializeField] private AbilityManager AbilityManager;
+    [SerializeField] private Timer timer;
+    [SerializeField] private Light Light;
     [SerializeField] private float DrainRate;
     [SerializeField] private AudioClip FlashlightSFX;
     private bool FlashlightEnabled = false;
@@ -11,6 +12,7 @@ public class Flashlight : MonoBehaviour,IAbility
     // be to move the system from booleans to event system.
     private void Start()
     {
+        timer = FindObjectOfType<Timer>();  
         Light.gameObject.SetActive(false);
     }
     private void Update()
@@ -23,14 +25,24 @@ public class Flashlight : MonoBehaviour,IAbility
     }
     public void AbilityActivate()
     {
-        if (FlashlightEnabled == false && AbilityManager.BiocellCharge != 0) //FlaslightEnabled was false
+        if(AbilityManager.BiocellCharge == 0)
         {
-            FlashlightEnabled = true;
+            return;
         }
         else
         {
-            FlashlightEnabled = false;
-        }
+            if (FlashlightEnabled == false)
+            {
+                timer.isRunning = true;
+                FlashlightEnabled = true;
+            }
+            else
+            {
+                timer.isRunning = false;
+                timer.ResetTimer();
+                FlashlightEnabled = false;
+            }
+        }     
     }
     public void AbilityDrain()
     {
