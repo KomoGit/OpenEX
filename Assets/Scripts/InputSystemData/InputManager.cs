@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private ResetBiocharge ResetCharge;
     [SerializeField] private CarryObject CarryObject;
     [SerializeField] private Flashlight FlashlightObject;
+    [SerializeField] private Agility AgilityObject;
     [SerializeField] private P_movement MovementScriptObject;
     [SerializeField] private P_look LookScriptObject;
     public bool AllowPlayerMovement { private get; set; } = true;
@@ -18,14 +19,16 @@ public class InputManager : MonoBehaviour
         _ctrl = new PControls();
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();
-        _ctrl.Player.Interact.started += _ => InteractWithObject.CheckInteractiveObject();
-        _ctrl.Player.Shoot.started += _ => CarryObject.ThrowObject();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
         _ctrl.Player.Crouch.canceled += _ => MovementScriptObject.StopCrouch();
-        _ctrl.Abilities.Flashlight.started += _ => FlashlightObject.AbilityActivate();
         _ctrl.Player.SilentWalk.started += _ => MovementScriptObject.SilentWalk();
         _ctrl.Player.SilentWalk.canceled += _ => MovementScriptObject.StopSilentWalk();
         _ctrl.DebugKeys.ResetEnergy.started += _ => ResetCharge.SetEnergyFull();
+        //Abilities 
+        _ctrl.Abilities.Flashlight.started += _ => FlashlightObject.AbilityActivate();
+        _ctrl.Abilities.SpeenEnhancmentRunSilent.started += _ => AgilityObject.AbilityActivate();
+        _ctrl.Player.Interact.started += _ => InteractWithObject.CheckInteractiveObject();
+        _ctrl.Player.Shoot.started += _ => CarryObject.ThrowObject();
     }
     private void Update()
     {

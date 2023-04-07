@@ -5,7 +5,7 @@ public class AbilityManager : MonoBehaviour
 {
     private Timer timer;
     public float BiocellCharge;
-
+    private float drainRate;
     private void Awake()
     {
         timer = FindObjectOfType<Timer>();
@@ -14,6 +14,7 @@ public class AbilityManager : MonoBehaviour
 
     public bool IsEnergyDepleted(float drainRate)
     {  
+        this.drainRate = drainRate;
         if (BiocellCharge <= 0)
         {
             return true;   
@@ -25,7 +26,7 @@ public class AbilityManager : MonoBehaviour
     }
     private void OnSecondPassed(object sender, EventArgs e)
     {
-        DrainEnergy(1f);
+        DrainEnergy(drainRate);
     }
     private void DrainEnergy(float drainRate)
     {

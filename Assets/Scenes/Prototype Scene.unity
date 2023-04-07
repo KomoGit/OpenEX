@@ -5547,7 +5547,6 @@ GameObject:
   - component: {fileID: 1198907935}
   - component: {fileID: 1198907934}
   - component: {fileID: 1198907936}
-  - component: {fileID: 1198907937}
   m_Layer: 0
   m_Name: Input System Object
   m_TagString: Untagged
@@ -5571,6 +5570,7 @@ MonoBehaviour:
   ResetCharge: {fileID: 1494404792}
   CarryObject: {fileID: 8344611502805901213}
   FlashlightObject: {fileID: 8344611502805901212}
+  AgilityObject: {fileID: 1494404796}
   MovementScriptObject: {fileID: 1494404793}
   LookScriptObject: {fileID: 2025418231}
 --- !u!4 &1198907935
@@ -5602,18 +5602,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Duration: 100
   isRunning: 0
---- !u!114 &1198907937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198907933}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cc4b23894533e24f9dd34a949cf69b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1316651287
 GameObject:
   m_ObjectHideFlags: 0
@@ -6273,6 +6261,7 @@ GameObject:
   - component: {fileID: 1494404792}
   - component: {fileID: 1494404791}
   - component: {fileID: 1494404794}
+  - component: {fileID: 1494404796}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Player
@@ -6578,6 +6567,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1494404796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494404784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da8e1b3a64c64c84295c60224c32d04c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityManager: {fileID: 1494404791}
+  PlayerMovement: {fileID: 1494404793}
+  timerObject: {fileID: 1198907936}
+  DrainRate: 1
+  AgilitySFX: {fileID: 0}
+  abilityLevel: 1
 --- !u!1 &1498608154
 GameObject:
   m_ObjectHideFlags: 0
@@ -11033,4 +11040,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07a6eaa6bab67944bbb6e1091634207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1494404788}
+  _player: {fileID: 1618748090}
