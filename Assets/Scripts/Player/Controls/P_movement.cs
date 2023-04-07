@@ -152,7 +152,14 @@ public class P_movement : MonoBehaviour
     public void StopSilentWalk()
     {
         IsSilentWalking = false;
-        currentMovementSpeed = regularMovementSpeed; 
+        if(playerState == PlayerStates.CROUCHING)
+        {
+            currentMovementSpeed = silentMovementSpeed;
+        }
+        else
+        {
+            currentMovementSpeed = regularMovementSpeed;
+        }     
     }
     public bool OnSlope()
     {
