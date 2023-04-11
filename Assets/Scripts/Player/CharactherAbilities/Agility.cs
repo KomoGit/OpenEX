@@ -34,12 +34,14 @@ public class Agility : MonoBehaviour,IAbility
         {
             if (AgilityEnabled == false)
             {
+                Debug.Log("Agility Activated");
                 timerObject.isRunning = true;
                 AgilityEnabled = true;
             }
             else
             {
                 //This will most likely cause bugs as other abilities also reset timer. (Spoiler Alert: It Does)
+                Debug.Log("Agility Deactivated");
                 timerObject.isRunning = false;
                 timerObject.ResetTimer();
                 AgilityEnabled = false;

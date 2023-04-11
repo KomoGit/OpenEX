@@ -4,7 +4,7 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private float Duration = 10f;
-    private float timeRemaining;
+    [SerializeField]private float timeRemaining;
     private float timeSinceLastEvent;
     public bool isRunning = false;
     public event EventHandler SecondPassed;

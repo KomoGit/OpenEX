@@ -27,7 +27,8 @@ public class P_movement : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 moveDirection;
     private float startYScale;
-    private float currentMovementSpeed;
+    public float CurrentMovementSpeed { private get; set; }
+    //private float currentMovementSpeed;
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
     public bool IsWalking => InputManager.PlayerVector != Vector2.zero;
     [HideInInspector] public bool IsCrouching = false;
@@ -35,7 +36,7 @@ public class P_movement : MonoBehaviour
     private bool CoyoteTimerActive = false;
     void Awake()
     {
-        currentMovementSpeed = regularMovementSpeed;
+        CurrentMovementSpeed = regularMovementSpeed;
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true;
         playerTransform = GetComponent<Transform>();
@@ -103,19 +104,19 @@ public class P_movement : MonoBehaviour
     {
         moveDirection = Vector3.zero;
         moveDirection = orientation.forward * input.y + orientation.right * input.x;
-        _rb.AddForce(10f * currentMovementSpeed * moveDirection.normalized,ForceMode.Force);
+        _rb.AddForce(10f * CurrentMovementSpeed * moveDirection.normalized,ForceMode.Force);
     }
     public void HandleMovement(Vector3 direction)
     {
-        _rb.AddForce(20f * currentMovementSpeed * direction.normalized, ForceMode.Force);
+        _rb.AddForce(20f * CurrentMovementSpeed * direction.normalized, ForceMode.Force);
     }
     private void SpeedControl()
     {
         Vector3 flatVel = new(_rb.velocity.x,0f,_rb.velocity.z);
 
-        if(flatVel.magnitude > currentMovementSpeed)
+        if(flatVel.magnitude > CurrentMovementSpeed)
         {
-            Vector3 limitedVel = flatVel.normalized * currentMovementSpeed;
+            Vector3 limitedVel = flatVel.normalized * CurrentMovementSpeed;
             _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
         }
     }
@@ -131,31 +132,31 @@ public class P_movement : MonoBehaviour
     public void Crouch()
     {
         IsCrouching = true;
-        currentMovementSpeed = silentMovementSpeed;
+        CurrentMovementSpeed = silentMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         if (IsGrounded) _rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
     }
     public void StopCrouch()
     {
         IsCrouching = false;
-        currentMovementSpeed = regularMovementSpeed;
+        CurrentMovementSpeed = regularMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, startYScale, 1);
     }
     public void SilentWalk()
     {
         IsSilentWalking = true;
-        currentMovementSpeed = silentMovementSpeed;
+        CurrentMovementSpeed = silentMovementSpeed;
     }
     public void StopSilentWalk()
     {
         IsSilentWalking = false;
         if(playerState == PlayerStates.CROUCHING)
         {
-            currentMovementSpeed = silentMovementSpeed;
+            CurrentMovementSpeed = silentMovementSpeed;
         }
         else
         {
-            currentMovementSpeed = regularMovementSpeed;
+            CurrentMovementSpeed = regularMovementSpeed;
         }     
     }
     public bool OnSlope()

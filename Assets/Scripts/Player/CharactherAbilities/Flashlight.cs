@@ -33,11 +33,13 @@ public class Flashlight : MonoBehaviour,IAbility
         {
             if (FlashlightEnabled == false)
             {
+                Debug.Log("Flashlight Activated");
                 timer.isRunning = true;
                 FlashlightEnabled = true;
             }
             else
             {
+                Debug.Log("Flashlight Deactivated");
                 timer.isRunning = false;
                 timer.ResetTimer();
                 FlashlightEnabled = false;

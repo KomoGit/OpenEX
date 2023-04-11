@@ -12,8 +12,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] private P_look LookScriptObject;
     public bool AllowPlayerMovement { private get; set; } = true;
     public static Vector2 PlayerVector { get; private set; } //Not sure if this is spaghetti code, but this is being accessed by p_movement where it is accessed by this script.
-
-
     private void Awake()
     {
         _ctrl = new PControls();
