@@ -3,9 +3,11 @@ using UnityEngine;
 public class CameraPanel : MonoBehaviour,IInteractive
 {
     [SerializeField] private Camera _camera;
+    private InputManager _movement;
     private void Awake()
     {
-        _camera.gameObject.SetActive(false);
+        _movement = FindObjectOfType<InputManager>();
+        _camera.gameObject.SetActive(false);       
     }
     public void Activate()
     {
@@ -19,11 +21,13 @@ public class CameraPanel : MonoBehaviour,IInteractive
     {
         if(_camera.gameObject.activeInHierarchy) 
         {
+            _movement.AllowPlayerMovement = false;
             return true;
         }
         else
         {
-            return false;
+            _movement.AllowPlayerMovement = true;
+            return false;           
         }
     }
 }
