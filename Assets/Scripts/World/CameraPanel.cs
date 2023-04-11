@@ -21,12 +21,12 @@ public class CameraPanel : MonoBehaviour,IInteractive
     {
         if(_camera.gameObject.activeInHierarchy) 
         {
-            _movement.AllowPlayerMovement = false;
+            _movement.AllowPlayerMovement = true;
             return true;
         }
         else
         {
-            _movement.AllowPlayerMovement = true;
+            _movement.AllowPlayerMovement = false;
             return false;           
         }
     }
