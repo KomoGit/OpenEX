@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
@@ -6,12 +7,16 @@ public class AbilityManager : MonoBehaviour
     [SerializeField] private float BiocellCharge = 100;
     public float CurrentBiocellCharge; //Turn it to private once the development cycle is over.
     public event EventHandler SecondPassed;
-    private readonly float TimePerSecond = 1;
-    private float timeElapsed;
+    private readonly float Interval = 1;
 
     private void Awake()
     {
         CurrentBiocellCharge = BiocellCharge;      
+    }
+
+    private void Start()
+    {
+        StartCoroutine(StartTimer());
     }
     public bool IsEnergyDepleted()
     {  
@@ -24,17 +29,19 @@ public class AbilityManager : MonoBehaviour
             return false;
         }
     }
-    private void Update()
+    //According to Chat-GPT this is more performant.
+    private IEnumerator StartTimer()
     {
-        TimePassed();
-    }
-    private void TimePassed()
-    {
-        timeElapsed += Time.deltaTime;
-        if (timeElapsed >= TimePerSecond)
+        float elapsedTime = 0f;
+        while (true)
         {
-            timeElapsed -= TimePerSecond;
-            SecondPassed?.Invoke(this,EventArgs.Empty);
+            yield return null;
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= Interval)
+            {
+                SecondPassed?.Invoke(this,EventArgs.Empty);
+                elapsedTime = 0f;
+            }
         }
     }
     public void DrainEnergy(float drainRate)
