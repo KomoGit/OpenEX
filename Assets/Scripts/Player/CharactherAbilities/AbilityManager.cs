@@ -1,31 +1,22 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
-{  
-    public float BiocellCharge;
-    //private Timer timer;
-    //private List<float> AbilityDrainRates = new();
-    //private float CombinedDrainRate;
+{      
+    [SerializeField] private float BiocellCharge = 100;
+    public float CurrentBiocellCharge; //Turn it to private once the development cycle is over.
+    public event EventHandler SecondPassed;
+    private readonly float TimePerSecond = 1;
+    private float timeElapsed;
+
+
     private void Awake()
     {
-        //timer = FindObjectOfType<Timer>();
-        //timer.SecondPassed += OnSecondPassed;
+        CurrentBiocellCharge = BiocellCharge;      
     }
-    //public void CombineDrainRate()
-    //{
-    //    for (int i = 0; i < AbilityDrainRates.Count; i++)
-    //    {
-    //        Debug.Log(AbilityDrainRates[i]);
-    //        CombinedDrainRate = AbilityDrainRates[i];
-    //    }
-    //    Debug.Log(CombinedDrainRate);
-    //}
-    public bool IsEnergyDepleted(float drainRate)
+    public bool IsEnergyDepleted()
     {  
-        //AbilityDrainRates.Add(drainRate);
-        if (BiocellCharge <= 0)
+        if (CurrentBiocellCharge <= 0)
         {
             return true;   
         }
@@ -34,45 +25,21 @@ public class AbilityManager : MonoBehaviour
             return false;
         }
     }
-
-    [SerializeField] private float timeElapsed;
-    [SerializeField] private float timePerSecond;
-
-    public event Action<float> SecondPassed;
-
-    //public delegate void SecondPassed(float timeElapsed);
-    //public static event SecondPassed OnSecondPassed;
-
     private void Update()
     {
-        TimePassed(Time.deltaTime);
+        TimePassed();
     }
-
-    private void TimePassed(float deltaTime)
+    private void TimePassed()
     {
-        timeElapsed += deltaTime;
-        if (timeElapsed >= timePerSecond)
+        timeElapsed += Time.deltaTime;
+        if (timeElapsed >= TimePerSecond)
         {
-            timeElapsed -= timePerSecond;
-            //OnSecondPassed();
-            //SecondPassed?.Invoke(timeElapsed);
+            timeElapsed -= TimePerSecond;
+            SecondPassed?.Invoke(this,EventArgs.Empty);
         }
     }
-    //Perhaps this should have the subscriber and the event should be inside the abilities.
-    //The manager should subscribe to ability events
-    protected virtual void OnSecondPassed(float energy)
+    public void DrainEnergy(float drainRate)
     {
-        SecondPassed?.Invoke(energy);
-    }
-    //private void OnSecondPassed(object sender, EventArgs e)
-    //{
-    //    DrainEnergy(CombinedDrainRate);
-    //}
-    private void DrainEnergy(float drainRate)
-    {
-        if(BiocellCharge != 0)
-        {
-            BiocellCharge -= drainRate;
-        }       
+        CurrentBiocellCharge -= drainRate;
     }
 }

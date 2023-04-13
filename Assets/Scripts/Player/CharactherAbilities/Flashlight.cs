@@ -1,31 +1,26 @@
+using System;
 using UnityEngine;
 
 public class Flashlight : MonoBehaviour,IAbility
 {
     [SerializeField] private AbilityManager AbilityManager;
-    [SerializeField] private Timer timer;
     [SerializeField] private Light Light;
-    [SerializeField] private float DrainRate;
+    [SerializeField] private float DrainRatePerSecond;
     [SerializeField] private AudioClip FlashlightSFX;
     private bool FlashlightEnabled = false;
-    // Perhaps the best approach would
-    // be to move the system from booleans to event system.
-    private void Start()
+
+    private void Awake()
     {
-        timer = FindObjectOfType<Timer>();  
         Light.gameObject.SetActive(false);
+        AbilityManager = FindObjectOfType<AbilityManager>();
     }
     private void Update()
     {
         Light.gameObject.SetActive(FlashlightEnabled);
-        if(FlashlightEnabled)
-        {
-            AbilityDrain();
-        }
     }
     public void AbilityActivate()
     {
-        if(AbilityManager.BiocellCharge == 0)
+        if(AbilityManager.IsEnergyDepleted())
         {
             return;
         }
@@ -34,27 +29,19 @@ public class Flashlight : MonoBehaviour,IAbility
             if (FlashlightEnabled == false)
             {
                 Debug.Log("Flashlight Activated");
-                timer.isRunning = true;
+                AbilityManager.SecondPassed += DrainPerSecond;
                 FlashlightEnabled = true;
             }
             else
             {
                 Debug.Log("Flashlight Deactivated");
-                timer.isRunning = false;
-                timer.ResetTimer();
+                AbilityManager.SecondPassed -= DrainPerSecond;
                 FlashlightEnabled = false;
             }
         }     
     }
-    public void AbilityDrain()
+    private void DrainPerSecond(object sender, EventArgs e)
     {
-      if (AbilityManager.IsEnergyDepleted(DrainRate))
-      {
-        FlashlightEnabled = false;
-      }
-      else
-      {
-        AbilityManager.IsEnergyDepleted(DrainRate);
-      } 
+        AbilityManager.DrainEnergy(DrainRatePerSecond);
     }
 }

@@ -1,6 +1,8 @@
+using System;
+
 public interface IAbility 
 {
     public void AbilityActivate();
-
-    public void AbilityDrain();
+    private void DrainPerSecond(object sender, EventArgs e) { }
+    //public void AbilityDrain();
 }
