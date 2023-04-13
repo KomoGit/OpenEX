@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6828019223510485646}
   - component: {fileID: 7158307485864681704}
   - component: {fileID: 4805622149370552387}
-  - component: {fileID: 6828019223510485647}
   - component: {fileID: 274344916732569317}
   m_Layer: 0
   m_Name: Door
@@ -346,22 +345,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!54 &6828019223510485647
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2922953011378973668}
-  serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 94
-  m_CollisionDetection: 0
 --- !u!114 &274344916732569317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2
   _angle: -90
-  _isOpen: 0
   _isLocked: 1
-  OpenDoor: {fileID: 0}
-  CloseDoor: {fileID: 0}
+  _audioSource: {fileID: 0}
+  OpenDoor: {fileID: 8300000, guid: 1eaf4cb4c0df76746a94d02a23e94376, type: 3}
+  CloseDoor: {fileID: 8300000, guid: 5626dc685984c90479bfa6f60d2bb57e, type: 3}

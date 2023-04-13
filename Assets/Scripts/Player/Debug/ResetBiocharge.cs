@@ -10,6 +10,6 @@ public class ResetBiocharge : MonoBehaviour
     }
     public void SetEnergyFull() 
     {
-        abilityManager.BiocellCharge = 100f;
+        abilityManager.CurrentBiocellCharge = 100f;
     }
 }
