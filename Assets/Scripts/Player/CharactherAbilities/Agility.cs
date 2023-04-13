@@ -41,6 +41,13 @@ public class Agility : MonoBehaviour,IAbility
 
     private void DrainPerSecond(object sender, EventArgs e)
     {
-        AbilityManager.DrainEnergy(DrainRatePerSecond);
+        if (!AbilityManager.IsEnergyDepleted())
+        {
+            AbilityManager.DrainEnergy(DrainRatePerSecond);
+        }
+        else
+        {
+            AgilityEnabled = false;
+        }
     }
 }

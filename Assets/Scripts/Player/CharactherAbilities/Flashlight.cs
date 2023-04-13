@@ -42,6 +42,13 @@ public class Flashlight : MonoBehaviour,IAbility
     }
     private void DrainPerSecond(object sender, EventArgs e)
     {
-        AbilityManager.DrainEnergy(DrainRatePerSecond);
+        if (!AbilityManager.IsEnergyDepleted())
+        {
+            AbilityManager.DrainEnergy(DrainRatePerSecond);
+        }
+        else
+        {
+            FlashlightEnabled = false;
+        }    
     }
 }

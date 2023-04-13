@@ -9,7 +9,6 @@ public class AbilityManager : MonoBehaviour
     private readonly float TimePerSecond = 1;
     private float timeElapsed;
 
-
     private void Awake()
     {
         CurrentBiocellCharge = BiocellCharge;      
