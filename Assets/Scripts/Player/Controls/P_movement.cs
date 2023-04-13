@@ -28,7 +28,6 @@ public class P_movement : MonoBehaviour
     private Vector3 moveDirection;
     private float startYScale;
     public float CurrentMovementSpeed { private get; set; }
-    //private float currentMovementSpeed;
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
     public bool IsWalking => InputManager.PlayerVector != Vector2.zero;
     [HideInInspector] public bool IsCrouching = false;
