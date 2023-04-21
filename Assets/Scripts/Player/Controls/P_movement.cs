@@ -16,7 +16,7 @@ public class P_movement : MonoBehaviour
     [SerializeField] private float groundDrag;
     [Header("Jump and Crouch")]
     [SerializeField] private float coyoteTime;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float regularJumpForce;
     [SerializeField] private float crouchYScale;
     [Header("Slope Handling")]
     [SerializeField] private float slopeAdjustedMass;
@@ -26,16 +26,18 @@ public class P_movement : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody _rb;
     private Vector3 moveDirection;
-    private float startYScale;
-    public float CurrentMovementSpeed { private get; set; }
+    private float startYScale; 
     public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
     public bool IsWalking => InputManager.PlayerVector != Vector2.zero;
     [HideInInspector] public bool IsCrouching = false;
     [HideInInspector] public bool IsSilentWalking = false;
+    [HideInInspector] public float CurrentMovementSpeed;
+    [HideInInspector] public float CurrentJumpForce;
     private bool CoyoteTimerActive = false;
     void Awake()
     {
         CurrentMovementSpeed = regularMovementSpeed;
+        CurrentJumpForce = regularJumpForce;
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true;
         playerTransform = GetComponent<Transform>();
@@ -109,8 +111,7 @@ public class P_movement : MonoBehaviour
     public void HandleMovement(Vector3 direction)
     {
         _rb.AddForce(20f * CurrentMovementSpeed * direction.normalized, ForceMode.Force);
-    }
-    #endregion
+    } 
     private void SpeedControl()
     {
         Vector3 flatVel = new(_rb.velocity.x,0f,_rb.velocity.z);
@@ -121,13 +122,14 @@ public class P_movement : MonoBehaviour
             _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
         }
     }
+    #endregion
     #region Jump
     public void Jump()
     {
         if(IsGrounded || CoyoteTimerActive){
             _rb.mass = defaultMass;
             _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
-            _rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            _rb.AddForce(transform.up * CurrentJumpForce, ForceMode.Impulse);
             CoyoteTimerActive = false;
         }
     }
