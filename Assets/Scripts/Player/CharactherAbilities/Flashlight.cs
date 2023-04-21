@@ -20,7 +20,7 @@ public class Flashlight : MonoBehaviour,IAbility
     }
     public void AbilityActivate()
     {
-        if(AbilityManager.IsEnergyDepleted())
+        if(AbilityManager.EnergyDepleted())
         {
             return;
         }
@@ -32,8 +32,8 @@ public class Flashlight : MonoBehaviour,IAbility
                 AbilityManager.SecondPassed += DrainPerSecond;
                 FlashlightEnabled = true;
             }
-            else
-            {
+            else if (FlashlightEnabled == true)                                                                                                            
+            {                                                                
                 Debug.Log("Flashlight Deactivated");
                 AbilityManager.SecondPassed -= DrainPerSecond;
                 FlashlightEnabled = false;
@@ -42,7 +42,7 @@ public class Flashlight : MonoBehaviour,IAbility
     }
     private void DrainPerSecond(object sender, EventArgs e)
     {
-        if (!AbilityManager.IsEnergyDepleted())
+        if (!AbilityManager.EnergyDepleted())
         {
             AbilityManager.DrainEnergy(DrainRatePerSecond);
         }
