@@ -13,12 +13,11 @@ public class AbilityManager : MonoBehaviour
     {
         CurrentBiocellCharge = BiocellCharge;      
     }
-
     private void Start()
     {
         StartCoroutine(StartTimer());
     }
-    public bool IsEnergyDepleted()
+    public bool EnergyDepleted()
     {  
         if (CurrentBiocellCharge <= 0)
         {
@@ -33,7 +32,7 @@ public class AbilityManager : MonoBehaviour
     private IEnumerator StartTimer()
     {
         float elapsedTime = 0f;
-        while (true)
+        while (!EnergyDepleted())//Perhaps this is why the bug happens, the ability keeps draining after the charge is out.
         {
             yield return null;
             elapsedTime += Time.deltaTime;
