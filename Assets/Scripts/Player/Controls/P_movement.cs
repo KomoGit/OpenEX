@@ -99,6 +99,7 @@ public class P_movement : MonoBehaviour
             playerState = PlayerStates.AIR;
         }
     }
+    #region Movement
     public void HandleMovement(Vector2 input)
     {
         moveDirection = Vector3.zero;
@@ -109,6 +110,7 @@ public class P_movement : MonoBehaviour
     {
         _rb.AddForce(20f * CurrentMovementSpeed * direction.normalized, ForceMode.Force);
     }
+    #endregion
     private void SpeedControl()
     {
         Vector3 flatVel = new(_rb.velocity.x,0f,_rb.velocity.z);
@@ -119,6 +121,7 @@ public class P_movement : MonoBehaviour
             _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
         }
     }
+    #region Jump
     public void Jump()
     {
         if(IsGrounded || CoyoteTimerActive){
@@ -128,6 +131,12 @@ public class P_movement : MonoBehaviour
             CoyoteTimerActive = false;
         }
     }
+    private void DisableCoyoteTimer()
+    {
+        CoyoteTimerActive = false;
+    }
+    #endregion
+    #region Crouching
     public void Crouch()
     {
         IsCrouching = true;
@@ -141,6 +150,8 @@ public class P_movement : MonoBehaviour
         CurrentMovementSpeed = regularMovementSpeed;
         playerTransform.localScale = new Vector3(transform.localScale.x, startYScale, 1);
     }
+    #endregion
+    #region SilentWalk
     public void SilentWalk()
     {
         IsSilentWalking = true;
@@ -158,6 +169,8 @@ public class P_movement : MonoBehaviour
             CurrentMovementSpeed = regularMovementSpeed;
         }     
     }
+    #endregion
+    #region Slope
     public bool OnSlope()
     {
         if (Physics.Raycast(transform.position,Vector3.down,out slopeHit,playerHeight * 0.5f + 0.3f))
@@ -171,8 +184,5 @@ public class P_movement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
-    private void DisableCoyoteTimer()
-    {
-        CoyoteTimerActive = false;
-    }
+    #endregion
 }
