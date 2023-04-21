@@ -13,6 +13,7 @@ public class CarryObject : MonoBehaviour,IAbility
     [SerializeField] private float maxWeight = 2f; //We can make this into an array, so as player upgrades the value will change.
     [SerializeField] private float lerpSpeed = 100f;
     [SerializeField] private float throwForce = 20f;
+    [SerializeField][Range(1, 4)] private int abilityLevel = 1;
 
     private GameObject _objectHeld = default;
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
