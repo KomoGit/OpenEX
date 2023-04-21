@@ -7,7 +7,7 @@ public class PlayerAbilityTimer : MonoBehaviour
     private void Awake()
     {
         abilityManager = FindObjectOfType<AbilityManager>();
-        //abilityManager.SecondPassed += HandleSecondPassed;
+        abilityManager.SecondPassed += HandleSecondPassed;
     }
 
     private void HandleSecondPassed(object sender,EventArgs e)
