@@ -6966,7 +6966,7 @@ MonoBehaviour:
   silentMovementSpeed: 2
   groundDrag: 5
   coyoteTime: 0.8
-  jumpForce: 5
+  regularJumpForce: 5
   crouchYScale: 0.5
   slopeAdjustedMass: 5
   defaultMass: 1
@@ -6974,6 +6974,8 @@ MonoBehaviour:
   maxSlopeAngle: 60
   IsCrouching: 0
   IsSilentWalking: 0
+  CurrentMovementSpeed: 0
+  CurrentJumpForce: 0
 --- !u!114 &1494404794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7133,6 +7135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
+  PlayerMovement: {fileID: 1494404793}
   DrainRatePerSecond: 1
   AgilitySFX: {fileID: 0}
   abilityLevel: 1
