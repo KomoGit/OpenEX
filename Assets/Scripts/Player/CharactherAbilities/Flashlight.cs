@@ -7,7 +7,7 @@ public class Flashlight : MonoBehaviour,IAbility
     [SerializeField] private Light Light;
     [SerializeField] private float DrainRatePerSecond;
     [SerializeField] private AudioClip FlashlightSFX;
-    private bool FlashlightEnabled = false;
+    [SerializeField] private bool FlashlightEnabled = false;
 
     private void Awake()
     {
@@ -16,29 +16,30 @@ public class Flashlight : MonoBehaviour,IAbility
     }
     private void Update()
     {
-        Light.gameObject.SetActive(FlashlightEnabled);
-    }
-    public void AbilityActivate()
-    {
-        if(AbilityManager.EnergyDepleted())
+        if (!AbilityManager.EnergyDepleted())
         {
-            return;
+            Light.gameObject.SetActive(FlashlightEnabled);
         }
         else
         {
+            FlashlightEnabled = !AbilityManager.EnergyDepleted();
+            Light.gameObject.SetActive(FlashlightEnabled);
+        }
+    }
+    public void AbilityActivate()
+    {
             if (FlashlightEnabled == false)
             {
                 Debug.Log("Flashlight Activated");
+                FlashlightEnabled = true;           
                 AbilityManager.SecondPassed += DrainPerSecond;
-                FlashlightEnabled = true;
             }
-            else if (FlashlightEnabled == true)                                                                                                            
-            {                                                                
-                Debug.Log("Flashlight Deactivated");
+            else if (FlashlightEnabled == true)
+            {
+                Debug.Log("Flashlight Deactivated");               
                 AbilityManager.SecondPassed -= DrainPerSecond;
                 FlashlightEnabled = false;
-            }
-        }     
+            } 
     }
     private void DrainPerSecond(object sender, EventArgs e)
     {
@@ -46,9 +47,5 @@ public class Flashlight : MonoBehaviour,IAbility
         {
             AbilityManager.DrainEnergy(DrainRatePerSecond);
         }
-        else
-        {
-            FlashlightEnabled = false;
-        }    
     }
 }
