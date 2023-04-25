@@ -5,32 +5,22 @@ using UnityEngine;
 public class AbilityManager : MonoBehaviour
 {      
     [SerializeField] private float BiocellCharge = 100;
-    public float CurrentBiocellCharge; //Turn it to private once the development cycle is over.
+    public float CurrentBiocellCharge;
     public event EventHandler SecondPassed;
-    private readonly float Interval = 1;
 
     private void Awake()
     {
-        CurrentBiocellCharge = BiocellCharge;      
-    }
-    private void Start()
-    {
+        CurrentBiocellCharge = BiocellCharge;
         StartCoroutine(StartTimer());
     }
     public bool EnergyDepleted()
-    {  
-        if (CurrentBiocellCharge <= 0)
-        {
-            return true;   
-        }
-        else
-        {
-            return false;
-        }
+    {
+        return CurrentBiocellCharge == 0;
     }
     //According to Chat-GPT this is more performant.
     private IEnumerator StartTimer()
     {
+        float Interval = 1;
         float elapsedTime = 0f;
         while (!EnergyDepleted())//Perhaps this is why the bug happens, the ability keeps draining after the charge is out.
         {
