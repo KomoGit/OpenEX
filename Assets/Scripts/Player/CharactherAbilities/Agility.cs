@@ -15,20 +15,21 @@ public class Agility : MonoBehaviour,IAbility
 
     void Awake()
     {
+        PlayerMovement = FindObjectOfType<P_movement>();
+        AbilityManager = FindObjectOfType<AbilityManager>();
+
         PlayerJumpForce = PlayerMovement.CurrentJumpForce;
         PlayerSpeed = PlayerMovement.CurrentMovementSpeed;
-    }
-
-    void Start()
-    {
-        PlayerMovement = FindObjectOfType<P_movement>();
-        AbilityManager = FindObjectOfType<AbilityManager>();    
     }
     public void AbilityActivate()
     {
         if (AbilityManager.EnergyDepleted())
         {
-            return;
+            if (AgilityEnabled)
+            {
+                AgilityEnabled = false;
+            }
+            //return;
         }
         else
         {
@@ -38,7 +39,7 @@ public class Agility : MonoBehaviour,IAbility
                 AbilityManager.SecondPassed += DrainPerSecond;
                 EnableAgility();
             }
-            else if (AgilityEnabled == true || AbilityManager.EnergyDepleted())
+            else if (AbilityManager.EnergyDepleted() && AgilityEnabled == true) // || AbilityManager.EnergyDepleted()
             {
                 Debug.Log("Agility Deactivated");
                 AbilityManager.SecondPassed -= DrainPerSecond;
