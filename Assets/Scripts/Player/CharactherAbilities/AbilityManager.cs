@@ -18,11 +18,11 @@ public class AbilityManager : MonoBehaviour
         return CurrentBiocellCharge == 0;
     }
     //According to Chat-GPT this is more performant.
-    private IEnumerator StartTimer()
+    public IEnumerator StartTimer()
     {
         float Interval = 1;
         float elapsedTime = 0f;
-        while (!EnergyDepleted())//Perhaps this is why the bug happens, the ability keeps draining after the charge is out.
+        while (!EnergyDepleted())
         {
             yield return null;
             elapsedTime += Time.deltaTime;

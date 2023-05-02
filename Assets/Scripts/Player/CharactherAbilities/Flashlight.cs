@@ -11,7 +11,6 @@ public class Flashlight : MonoBehaviour,IAbility
 
     private void Awake()
     {
-        Light.gameObject.SetActive(false);
         AbilityManager = FindObjectOfType<AbilityManager>();
     }
     private void Update()
