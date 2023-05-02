@@ -23,33 +23,30 @@ public class Agility : MonoBehaviour,IAbility
     }
     private void Update()
     {
-        if (AbilityManager.EnergyDepleted())
+        if (AbilityManager.IsEnergyDepleted())
         {
-            AgilityEnabled = false;
             DisableAgility();
         }
     }
     public void AbilityActivate()
     {
-        if (!AbilityManager.EnergyDepleted())
+        if (!AbilityManager.IsEnergyDepleted())
         {
             if (AgilityEnabled == false)
             {
-                Debug.Log("Agility Activated");
-                AbilityManager.SecondPassed += DrainPerSecond;
+                Debug.Log("Agility Activated");               
                 EnableAgility();
             }
             else if (AgilityEnabled == true)
             {
                 Debug.Log("Agility Deactivated");
-                AbilityManager.SecondPassed -= DrainPerSecond;
                 DisableAgility();
             }
         }
     }
     private void DrainPerSecond(object sender, EventArgs e)
     {
-        if (!AbilityManager.EnergyDepleted())
+        if (!AbilityManager.IsEnergyDepleted())
         {
             AbilityManager.DrainEnergy(DrainRatePerSecond);
         }
@@ -58,6 +55,7 @@ public class Agility : MonoBehaviour,IAbility
     private void EnableAgility()
     {
         AgilityEnabled = true;
+        AbilityManager.SecondPassed += DrainPerSecond;
         switch (abilityLevel)
         {
             case 2:
@@ -81,8 +79,9 @@ public class Agility : MonoBehaviour,IAbility
     }
     private void DisableAgility()
     {
+        AgilityEnabled = false;
         PlayerMovement.CurrentJumpForce = PlayerJumpForce;
         PlayerMovement.CurrentMovementSpeed = PlayerSpeed;
-        AgilityEnabled = false;
+        AbilityManager.SecondPassed -= DrainPerSecond;
     }
 }

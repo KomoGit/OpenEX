@@ -16,34 +16,43 @@ public class Flashlight : MonoBehaviour,IAbility
     private void Update()
     {
         Light.gameObject.SetActive(FlashlightEnabled);
-        if (AbilityManager.EnergyDepleted())
+        if (AbilityManager.IsEnergyDepleted())
         {
-            FlashlightEnabled = false;  
+            DisableFlashlight();
         }
     }
     public void AbilityActivate() //DO NOT RENAME, PART OF INTERFACE
     {
-        if (!AbilityManager.EnergyDepleted()) 
+        if (!AbilityManager.IsEnergyDepleted()) 
         {
             if (FlashlightEnabled == false)
             {
                 Debug.Log("Flashlight Activated");
-                FlashlightEnabled = true;
-                AbilityManager.SecondPassed += DrainPerSecond;
+                EnableFlashlight();
             }
             else if (FlashlightEnabled == true)
             {
                 Debug.Log("Flashlight Deactivated");
-                AbilityManager.SecondPassed -= DrainPerSecond;
-                FlashlightEnabled = false;
+                DisableFlashlight();
             }
         }
     }
     private void DrainPerSecond(object sender, EventArgs e) //ALSO PART OF INTERFACE
     {
-        if (!AbilityManager.EnergyDepleted())
+        if (!AbilityManager.IsEnergyDepleted())
         {
             AbilityManager.DrainEnergy(DrainRatePerSecond);
         }
     }
+    private void EnableFlashlight()
+    {
+        FlashlightEnabled = true;
+        AbilityManager.SecondPassed += DrainPerSecond;
+    }
+    private void DisableFlashlight()
+    {
+        AbilityManager.SecondPassed -= DrainPerSecond;
+        FlashlightEnabled = false;
+    }
+
 }
