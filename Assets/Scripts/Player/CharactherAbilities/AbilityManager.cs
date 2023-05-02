@@ -13,20 +13,20 @@ public class AbilityManager : MonoBehaviour
         CurrentBiocellCharge = BiocellCharge;
         StartCoroutine(StartTimer());
     }
-    public bool EnergyDepleted()
+    public bool IsEnergyDepleted()
     {
         return CurrentBiocellCharge == 0;
     }
     //According to Chat-GPT this is more performant.
-    public IEnumerator StartTimer()
+    public IEnumerator StartTimer() //Potential performance sink, because it is enabled permanently.
     {
-        float Interval = 1;
+        const float INTERVAL = 1;
         float elapsedTime = 0f;
-        while (!EnergyDepleted())
+        while (true)
         {
             yield return null;
             elapsedTime += Time.deltaTime;
-            if (elapsedTime >= Interval)
+            if (elapsedTime >= INTERVAL)
             {
                 SecondPassed?.Invoke(this,EventArgs.Empty);
                 elapsedTime = 0f;
