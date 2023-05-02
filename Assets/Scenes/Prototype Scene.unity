@@ -2822,7 +2822,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1298
+  m_Name: pb_Mesh-1376
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3526,7 +3526,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1280
+  m_Name: pb_Mesh-1360
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5284,7 +5284,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1262
+  m_Name: pb_Mesh-1344
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6031,7 +6031,7 @@ PrefabInstance:
       objectReference: {fileID: 810697960}
     - target: {fileID: 2999443766800958894, guid: 92b1819a9fe77974b894339aa2958496, type: 3}
       propertyPath: m_VersionIndex
-      value: 2604
+      value: 2607
       objectReference: {fileID: 0}
     - target: {fileID: 4805622149370552387, guid: 92b1819a9fe77974b894339aa2958496, type: 3}
       propertyPath: m_Mesh
@@ -6931,7 +6931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0a84b35cbdcb44abc33ef589a5fecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BiocellCharge: 10
+  BiocellCharge: 5
   CurrentBiocellCharge: 0
 --- !u!114 &1494404792
 MonoBehaviour:
@@ -7504,7 +7504,7 @@ PrefabInstance:
       objectReference: {fileID: 446275933}
     - target: {fileID: 2999443766800958894, guid: 92b1819a9fe77974b894339aa2958496, type: 3}
       propertyPath: m_VersionIndex
-      value: 2607
+      value: 2610
       objectReference: {fileID: 0}
     - target: {fileID: 4805622149370552387, guid: 92b1819a9fe77974b894339aa2958496, type: 3}
       propertyPath: m_Mesh
@@ -9973,7 +9973,7 @@ PrefabInstance:
       objectReference: {fileID: 262534378}
     - target: {fileID: 2999443766800958894, guid: 92b1819a9fe77974b894339aa2958496, type: 3}
       propertyPath: m_VersionIndex
-      value: 2601
+      value: 2604
       objectReference: {fileID: 0}
     - target: {fileID: 4805622149370552387, guid: 92b1819a9fe77974b894339aa2958496, type: 3}
       propertyPath: m_Mesh
@@ -11710,6 +11710,7 @@ MonoBehaviour:
   Light: {fileID: 734998294}
   DrainRatePerSecond: 1
   FlashlightSFX: {fileID: 0}
+  FlashlightEnabled: 0
 --- !u!114 &8344611502805901213
 MonoBehaviour:
   m_ObjectHideFlags: 0
