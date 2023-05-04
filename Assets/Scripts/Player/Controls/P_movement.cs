@@ -70,6 +70,7 @@ public class P_movement : MonoBehaviour
             Invoke(nameof(DisableCoyoteTimer), coyoteTime);
         }
     }
+    #region States,StateHandler
     public enum PlayerStates
     {
         IDLE,
@@ -101,6 +102,7 @@ public class P_movement : MonoBehaviour
             playerState = PlayerStates.AIR;
         }
     }
+    #endregion
     #region Movement
     public void HandleMovement(Vector2 input)
     {
