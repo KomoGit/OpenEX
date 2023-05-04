@@ -1,66 +1,99 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class CarryObject : MonoBehaviour,IAbility 
+public class CarryObject : MonoBehaviour, IAbility
 {
     [Header("References")]
+    [SerializeField] private AbilityManager abilityManager;
     [SerializeField] private Collider _playerCollider;
     [SerializeField] private Camera _camera;
     [SerializeField] private Transform _objectHolder;
     [Header("Values")]
+    [SerializeField] private float DrainRatePerSecond = 1f;
     [SerializeField] private float abilityCooldownTimer = 1f;
     [SerializeField] private float maxGrabDistance = 10f;
-    [SerializeField] private float maxWeight = 2f; //We can make this into an array, so as player upgrades the value will change.
+    [SerializeField] private float MaxWeight = 5f;
     [SerializeField] private float lerpSpeed = 100f;
     [SerializeField] private float throwForce = 20f;
-    [SerializeField][Range(1, 4)] private int abilityLevel = 1;
+    [SerializeField][Range(1, 4)] private int AbilityLevel = 1;
 
     private GameObject _objectHeld = default;
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
-    private bool canUseAbility = true;
+    private bool GrabItemCooldown = true; //Used to prevent spam of throw ability.
     public Rigidbody GrabbedRB { get; private set; }
-
-    private void Update()
+    private void Awake()
     {
-        HoldObject();
+        abilityManager = FindObjectOfType<AbilityManager>();
     }
     private void FixedUpdate()
     {
-        IgnorePlayerCollission();  
+        if (GrabbedRB == null) abilityManager.SecondPassed -= DrainPerSecond;
+        HoldObject();        
+        IgnoreCollision();
     }
+    #region IAbility Components
     public void AbilityActivate()
     {
-        if (GrabbedRB) DropObject();
-        else CheckObject();
+        if (GrabbedRB)
+        {
+            DropObject();
+        }
+        else
+        {
+            CheckObject();
+        }
     }
-    public void AbilityDrain()
+    private void DrainPerSecond(object sender, EventArgs e)
     {
-        //Not yet implemented.
+        if (!abilityManager.IsEnergyDepleted())
+        {
+            abilityManager.DrainEnergy(DrainRatePerSecond);
+        }
+    }
+    #endregion
+    #region Primary Components   
+    private void CheckAbilityLevel(Rigidbody GrabbedRB)
+    {
+        switch (GrabbedRB.mass)
+        {
+            case 2:
+                DrainRatePerSecond = 0.5f;
+                abilityManager.SecondPassed += DrainPerSecond;
+                break;
+            case 3:
+                DrainRatePerSecond = 1.0f;
+                abilityManager.SecondPassed += DrainPerSecond;
+                break;
+            case 4:
+                DrainRatePerSecond = 1.5f;
+                abilityManager.SecondPassed += DrainPerSecond;
+                break;
+            case 5:
+                DrainRatePerSecond = 2f;
+                abilityManager.SecondPassed += DrainPerSecond;
+                break;
+            default:
+                break;
+        }
     }
     private void CheckObject()
     {
-        Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody !=null && canUseAbility && hit.rigidbody.mass <= maxWeight)//Has too many parameters.
+        Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));                                         
+        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody != null && GrabItemCooldown && hit.rigidbody.mass <= MaxWeight)
         {
             GrabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
-            canUseAbility = false;
-            if (GrabbedRB)
-            {
-                GrabbedRB.isKinematic = true;
-            }
+            CheckAbilityLevel(GrabbedRB);     
+            GrabItemCooldown = false;
         }
     }
     private void HoldObject()
     {
-        if (GrabbedRB) // && _grabbedRB.mass <= maxWeight
+        if (GrabbedRB)
         {
-            GrabbedRB.MovePosition(Vector3.Lerp(GrabbedRB.position, _objectHolder.transform.position, Time.deltaTime * lerpSpeed));
-        }
-        else if (GrabbedRB && GrabbedRB.mass >= maxWeight)
-        {
-            GrabbedRB.isKinematic = false;
-            GrabbedRB = null;
-        }
+            GrabbedRB.isKinematic = true;
+            GrabbedRB.MovePosition(Vector3.Lerp(GrabbedRB.position, _objectHolder.transform.position, Time.deltaTime * lerpSpeed));         
+        }     
     }
     private void DropObject()
     {
@@ -77,8 +110,8 @@ public class CarryObject : MonoBehaviour,IAbility
             GrabbedRB = null;
             StartCoroutine(ResetAbility());
         }
-    }
-    private void IgnorePlayerCollission()
+    }  
+    private void IgnoreCollision()
     {
         if (GrabbedRB)
         {
@@ -95,7 +128,10 @@ public class CarryObject : MonoBehaviour,IAbility
             }         
         }
     }
-    //Rendering mode of objects must be set to Transparent for this script to work. Otherwise the changes will not be visible.
+    #endregion
+    #region Secondary Components
+    //Rendering mode of objects must be set to Transparent for this script to work.
+    //Otherwise the changes will not be visible.
     private void ChangeAlpha(Material mat, float alphaVal)
     {
         Color oldColor = mat.color;
@@ -105,6 +141,7 @@ public class CarryObject : MonoBehaviour,IAbility
     private IEnumerator ResetAbility()
     {
         yield return new WaitForSeconds(abilityCooldownTimer);
-        canUseAbility = true;
+        GrabItemCooldown = true;
     }
+    #endregion  
 }
