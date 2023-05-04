@@ -69,21 +69,19 @@ public class CarryObject : MonoBehaviour, IAbility
                 DrainRatePerSecond = 1.5f;
                 abilityManager.SecondPassed += DrainPerSecond;
                 break;
-            case 5:
-                DrainRatePerSecond = 2f;
-                abilityManager.SecondPassed += DrainPerSecond;
-                break;
-            default:
-                break;
+            //case 5:
+            //    DrainRatePerSecond = 2f;
+            //    abilityManager.SecondPassed += DrainPerSecond;
+            //    break;
         }
     }
     private void CheckObject()
     {
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));                                         
-        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody != null && GrabItemCooldown && hit.rigidbody.mass <= MaxWeight)
+        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody != null && GrabItemCooldown && hit.rigidbody.mass <= MaxWeight && hit.rigidbody.mass <= AbilityLevel)
         {
             GrabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
-            CheckAbilityLevel(GrabbedRB);     
+            CheckAbilityLevel(GrabbedRB);
             GrabItemCooldown = false;
         }
     }
