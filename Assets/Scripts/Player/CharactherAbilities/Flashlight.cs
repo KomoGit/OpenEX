@@ -7,7 +7,7 @@ public class Flashlight : MonoBehaviour,IAbility
     [SerializeField] private Light Light;
     [SerializeField] private float DrainRatePerSecond;
     [SerializeField] private AudioClip FlashlightSFX;
-    [SerializeField] private bool FlashlightEnabled = false;
+    private bool FlashlightEnabled = false;
 
     private void Awake()
     {
