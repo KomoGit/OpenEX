@@ -3,5 +3,10 @@ using System;
 public interface IAbility 
 {
     public void AbilityActivate();
-    private void DrainPerSecond(object sender, EventArgs e) { }
+    /// <summary>
+    /// Drains Energy Per Second.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void DrainEnergy(object sender, EventArgs e) { }
 }
