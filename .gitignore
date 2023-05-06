@@ -22,6 +22,7 @@
 # Visual Studio cache directory
 .vs/
 .vscode/
+
 # Gradle cache directory
 .gradle/
 
@@ -41,6 +42,7 @@ ExportedObj/
 *.userprefs
 *.pidb
 *.booproj
+*.blob
 *.svd
 *.pdb
 *.mdb
