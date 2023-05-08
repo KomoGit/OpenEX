@@ -6813,6 +6813,7 @@ GameObject:
   - component: {fileID: 1494404792}
   - component: {fileID: 1494404791}
   - component: {fileID: 1494404794}
+  - component: {fileID: 1494404797}
   - component: {fileID: 1494404796}
   m_Layer: 0
   m_Name: Capsule
@@ -6931,7 +6932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0a84b35cbdcb44abc33ef589a5fecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BiocellCharge: 15
+  BiocellCharge: 100
   CurrentBiocellCharge: 1
 --- !u!114 &1494404792
 MonoBehaviour:
@@ -7135,10 +7136,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
+  timer: {fileID: 1494404797}
   PlayerMovement: {fileID: 1494404793}
   DrainRatePerSecond: 1
   AgilitySFX: {fileID: 0}
-  abilityLevel: 2
+  abilityLevel: 1
+--- !u!114 &1494404797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494404784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d309aa59b2ab3419d55799f8b2c5d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1498608154
 GameObject:
   m_ObjectHideFlags: 0
@@ -11822,6 +11836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
+  timer: {fileID: 0}
   Light: {fileID: 734998294}
   DrainRatePerSecond: 1
   FlashlightSFX: {fileID: 0}
@@ -11838,6 +11853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityManager: {fileID: 1494404791}
+  timer: {fileID: 0}
   _playerCollider: {fileID: 1494404785}
   _camera: {fileID: 2025418230}
   _objectHolder: {fileID: 7468143222532031480}

@@ -16,6 +16,7 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] AudioClip[] woodClips = default;
     [SerializeField] AudioClip[] waterClips = default;
 
+    public bool FootstepsEnabled { get; set; }
     private float footstepTimer = 0f;
     private float GetCurrentOffset => playerScript.IsCrouching || playerScript.IsSilentWalking ? baseStepSpeed * crouchStepMultiplier
                                       : baseStepSpeed;
