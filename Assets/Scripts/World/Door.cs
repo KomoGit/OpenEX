@@ -3,47 +3,47 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractive
 {
-    [SerializeField] private float _speed = 2f;
-    [SerializeField] private float _angle = 90f;
-    [SerializeField] private bool _isLocked = false;
-    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private float OpenCloseSpeed = 2f;
+    [SerializeField] private float Angle = 90f;
+    [SerializeField] private bool IsLocked = false;
+    [SerializeField] private AudioSource AudioSource;
     [SerializeField] private AudioClip OpenDoor = default;
     [SerializeField] private AudioClip CloseDoor = default;
     //public event EventHandler RemoteOpenDoor;
-    private bool _isOpen = false;
-    private Quaternion _startRotation;
-    private Quaternion _endRotation;
-    private Coroutine _coroutine;
+    private bool IsOpen = false;
+    private Quaternion StartRotation;
+    private Quaternion EndRotation;
+    private Coroutine _Coroutine;
 
     private void Awake()
     {  
-        _startRotation = transform.rotation;
-        _endRotation = _startRotation * Quaternion.Euler(0, _angle, 0);
+        StartRotation = transform.rotation;
+        EndRotation = StartRotation * Quaternion.Euler(0, Angle, 0);
     }   
     public void Activate()
     {
-        if (!_isLocked && !IsActivated())
+        if (!IsLocked && !IsActivated())
         {
-            if(_coroutine != null)  
+            if(_Coroutine != null)  
             {
-                StopCoroutine(_coroutine);
+                StopCoroutine(_Coroutine);
             }        
-            _coroutine = StartCoroutine(RotateDoor(_endRotation));
+            _Coroutine = StartCoroutine(RotateDoor(EndRotation));
             PlaySound(OpenDoor);
-            _isOpen = true;
+            IsOpen = true;
         }
     }
     public void Deactivate()
     {
-        if (!_isLocked && IsActivated())
+        if (!IsLocked && IsActivated())
         {
-            if (_coroutine != null)
+            if (_Coroutine != null)
             {
-                StopCoroutine(_coroutine);
+                StopCoroutine(_Coroutine);
             }           
-            _coroutine = StartCoroutine(RotateDoor(_startRotation));
+            _Coroutine = StartCoroutine(RotateDoor(StartRotation));
             PlaySound(CloseDoor);
-            _isOpen = false;
+            IsOpen = false;
         }
     }
     //Single function for opening or closing the door. 
@@ -51,17 +51,17 @@ public class Door : MonoBehaviour, IInteractive
     {
         while (Quaternion.Angle(transform.rotation, targetRotation) > 0.01f)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * _speed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * OpenCloseSpeed);
             yield return null;
         }
     }
     public bool IsActivated()
     {
-        return _isOpen;
+        return IsOpen;
     }
     private void PlaySound(AudioClip clip)
     {
-        _audioSource.PlayOneShot(clip);
+        AudioSource.PlayOneShot(clip);
     }
     //protected virtual void OnRemoteOpenDoor()
     //{

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour,IAbility
 {
     [SerializeField] private AbilityManager AbilityManager;
-    [SerializeField] private InternalTimer timer;
+    [SerializeField] private InternalTimer Timer;
     [SerializeField] private Light Light;
     [SerializeField] private float DrainRatePerSecond;
     [SerializeField] private AudioClip FlashlightSFX;
@@ -13,7 +13,7 @@ public class Flashlight : MonoBehaviour,IAbility
     private void Awake()
     {
         AbilityManager = FindObjectOfType<AbilityManager>();
-        timer = FindObjectOfType<InternalTimer>();
+        Timer = FindObjectOfType<InternalTimer>();
     }
     private void Update()
     {
@@ -49,11 +49,11 @@ public class Flashlight : MonoBehaviour,IAbility
     private void EnableFlashlight()
     {
         FlashlightEnabled = true;
-        timer.SecondPassed += DrainPerSecond;
+        Timer.SecondPassed += DrainPerSecond;
     }
     private void DisableFlashlight()
     {
-        timer.SecondPassed -= DrainPerSecond;
+        Timer.SecondPassed -= DrainPerSecond;
         FlashlightEnabled = false;
     }
 

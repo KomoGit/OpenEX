@@ -5,33 +5,33 @@ using UnityEngine;
 public class CarryObject : MonoBehaviour, IAbility
 {
     [Header("References")]
-    [SerializeField] private AbilityManager abilityManager;
-    [SerializeField] private InternalTimer timer;
-    [SerializeField] private Collider _playerCollider;
-    [SerializeField] private Camera _camera;
-    [SerializeField] private Transform _objectHolder;
+    [SerializeField] private AbilityManager AbilityManager;
+    [SerializeField] private InternalTimer Timer;
+    [SerializeField] private Collider PlayerCollider;
+    [SerializeField] private Camera Camera;
+    [SerializeField] private Transform ObjectHolder;
     [Header("Values")]
     [SerializeField] private float DrainRatePerSecond = 1f;
     [SerializeField] private float abilityCooldownTimer = 1f;
-    [SerializeField] private float maxGrabDistance = 10f;
+    [SerializeField] private float MaxGrabDistance = 10f;
     [SerializeField] private float MaxWeight = 5f;
-    [SerializeField] private float lerpSpeed = 100f;
+    [SerializeField] private float LerpSpeed = 100f;
     [SerializeField] private float[] ThrowForces = new float[4] { 20f,25f,30f,35f};
     [SerializeField][Range(1, 4)] private int AbilityLevel = 1;
 
-    private GameObject _objectHeld = default;
+    private GameObject ObjectHeld = default;
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
     private float ThrowForce;
     private bool GrabItemCooldown = true; //Used to prevent spam of throw ability.
     public Rigidbody GrabbedRB { get; private set; }
     private void Awake()
     {
-        abilityManager = FindObjectOfType<AbilityManager>();
-        timer = FindAnyObjectByType<InternalTimer>();   
+        AbilityManager = FindObjectOfType<AbilityManager>();
+        Timer = FindAnyObjectByType<InternalTimer>();   
     }
     private void FixedUpdate()
     {
-        if (GrabbedRB == null) timer.SecondPassed -= DrainPerSecond;
+        if (GrabbedRB == null) Timer.SecondPassed -= DrainPerSecond;
         HoldObject();        
         IgnoreCollision();
     }
@@ -49,9 +49,9 @@ public class CarryObject : MonoBehaviour, IAbility
     }
     private void DrainPerSecond(object sender, EventArgs e)
     {
-        if (!abilityManager.IsEnergyDepleted())
+        if (!AbilityManager.IsEnergyDepleted())
         {
-            abilityManager.DrainEnergy(DrainRatePerSecond);
+            AbilityManager.DrainEnergy(DrainRatePerSecond);
         }
     }
     #endregion
@@ -64,17 +64,17 @@ public class CarryObject : MonoBehaviour, IAbility
             case 2:
                 DrainRatePerSecond = 0.5f;
                 ThrowForce = ThrowForces[1];
-                timer.SecondPassed += DrainPerSecond;
+                Timer.SecondPassed += DrainPerSecond;
                 break;
             case 3:
                 DrainRatePerSecond = 1.0f;
                 ThrowForce = ThrowForces[2];
-                timer.SecondPassed += DrainPerSecond;
+                Timer.SecondPassed += DrainPerSecond;
                 break;
             case 4:
                 DrainRatePerSecond = 1.5f;
                 ThrowForce = ThrowForces[3];
-                timer.SecondPassed += DrainPerSecond;
+                Timer.SecondPassed += DrainPerSecond;
                 break;
             default:
                 ThrowForce = ThrowForces[0];
@@ -83,8 +83,8 @@ public class CarryObject : MonoBehaviour, IAbility
     }
     private void CheckObject()
     {
-        Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));                                         
-        if (Physics.Raycast(ray, out RaycastHit hit, maxGrabDistance) && hit.rigidbody != null && GrabItemCooldown && hit.rigidbody.mass <= MaxWeight && hit.rigidbody.mass <= AbilityLevel)
+        Ray ray = Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));                                         
+        if (Physics.Raycast(ray, out RaycastHit hit, MaxGrabDistance) && hit.rigidbody != null && GrabItemCooldown && hit.rigidbody.mass <= MaxWeight && hit.rigidbody.mass <= AbilityLevel)
         {
             GrabbedRB = hit.collider.gameObject.GetComponent<Rigidbody>();
             CheckAbilityLevel(GrabbedRB);
@@ -96,7 +96,7 @@ public class CarryObject : MonoBehaviour, IAbility
         if (GrabbedRB)
         {
             GrabbedRB.isKinematic = true;
-            GrabbedRB.MovePosition(Vector3.Lerp(GrabbedRB.position, _objectHolder.transform.position, Time.deltaTime * lerpSpeed));         
+            GrabbedRB.MovePosition(Vector3.Lerp(GrabbedRB.position, ObjectHolder.transform.position, Time.deltaTime * LerpSpeed));         
         }     
     }
     private void DropObject()
@@ -110,7 +110,7 @@ public class CarryObject : MonoBehaviour, IAbility
         if (GrabbedRB)
         {
             GrabbedRB.isKinematic = false;
-            GrabbedRB.AddForce(_camera.transform.forward * ThrowForce / GrabbedRB.mass, ForceMode.VelocityChange);
+            GrabbedRB.AddForce(Camera.transform.forward * ThrowForce / GrabbedRB.mass, ForceMode.VelocityChange);
             GrabbedRB = null;
             StartCoroutine(ResetAbility());
         }
@@ -119,16 +119,16 @@ public class CarryObject : MonoBehaviour, IAbility
     {
         if (GrabbedRB)
         {
-            _objectHeld = GrabbedRB.gameObject;
+            ObjectHeld = GrabbedRB.gameObject;
             GrabbedRB.GetComponent<Collider>().enabled = false;    
             ChangeAlpha(GrabbedRB.gameObject.GetComponent<Renderer>().material, AlphaTransparent);
         }
         else 
         {
-            if (_objectHeld != null) 
+            if (ObjectHeld != null) 
             {
-                _objectHeld.GetComponent<Collider>().enabled = true;
-                ChangeAlpha(_objectHeld.GetComponent<Renderer>().material, AlphaNonT);
+                ObjectHeld.GetComponent<Collider>().enabled = true;
+                ChangeAlpha(ObjectHeld.GetComponent<Renderer>().material, AlphaNonT);
             }         
         }
     }

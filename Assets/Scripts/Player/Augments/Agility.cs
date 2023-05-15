@@ -4,11 +4,11 @@ using UnityEngine;
 public class Agility : MonoBehaviour,IAbility
 {
     [SerializeField] private AbilityManager AbilityManager;
-    [SerializeField] private InternalTimer timer;
+    [SerializeField] private InternalTimer Timer;
     [SerializeField] private P_movement PlayerMovement;
     [SerializeField] private float DrainRatePerSecond;
     [SerializeField] private AudioClip AgilitySFX;
-    [SerializeField] [Range(1,4)] private int abilityLevel = 1;
+    [SerializeField] [Range(1,4)] private int AbilityLevel = 1;
     private bool AgilityEnabled = false;
     
     private float PlayerJumpForce;
@@ -18,7 +18,7 @@ public class Agility : MonoBehaviour,IAbility
     {
         PlayerMovement = FindObjectOfType<P_movement>();
         AbilityManager = FindObjectOfType<AbilityManager>();
-        timer = FindObjectOfType<InternalTimer>();
+        Timer = FindObjectOfType<InternalTimer>();
 
         PlayerJumpForce = PlayerMovement.CurrentJumpForce;
         PlayerSpeed = PlayerMovement.CurrentMovementSpeed;
@@ -57,8 +57,8 @@ public class Agility : MonoBehaviour,IAbility
     private void EnableAgility()
     {
         AgilityEnabled = true;
-        timer.SecondPassed += DrainPerSecond;
-        switch (abilityLevel)
+        Timer.SecondPassed += DrainPerSecond;
+        switch (AbilityLevel)
         {
             case 2:
                 PlayerMovement.CurrentMovementSpeed *= 2;
@@ -84,6 +84,6 @@ public class Agility : MonoBehaviour,IAbility
         AgilityEnabled = false;
         PlayerMovement.CurrentJumpForce = PlayerJumpForce;
         PlayerMovement.CurrentMovementSpeed = PlayerSpeed;
-        timer.SecondPassed -= DrainPerSecond;
+        Timer.SecondPassed -= DrainPerSecond;
     }
 }
