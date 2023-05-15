@@ -27,6 +27,7 @@
 .gradle/
 
 #Assets
+T3D Importer/
 Audio/
 Audio.meta
 
