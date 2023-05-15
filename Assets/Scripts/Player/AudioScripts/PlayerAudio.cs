@@ -42,7 +42,7 @@ public class PlayerAudio : MonoBehaviour
         {
             //Perhaps we can create a single raycast function that everything that requires it access it.
             //After this is working, I will see to that.
-            if (Physics.Raycast(PlayerScript.orientation.position, Vector3.down,out RaycastHit hit,3))//AVOID MAGIC NUMBER.
+            if (Physics.Raycast(PlayerScript.Orientation.position, Vector3.down,out RaycastHit hit,3))//AVOID MAGIC NUMBER.
             {
                 switch(hit.collider.tag)
                 {

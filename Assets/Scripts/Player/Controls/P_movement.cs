@@ -6,28 +6,28 @@ using UnityEngine;
 public class P_movement : MonoBehaviour
 {
     [Header("Player Configures")]
-    [SerializeField] private PlayerStates playerState;
-    [SerializeField] private RaycastHit slopeHit;
-    [SerializeField] private LayerMask whatIsGround;
-    public Transform orientation;
+    [SerializeField] private PlayerStates PlayerState;
+    [SerializeField] private RaycastHit SlopeHit;
+    [SerializeField] private LayerMask WhatIsGround;
+    public Transform Orientation;
     [Header("Speed and Force")]
-    [SerializeField] private float regularMovementSpeed;
-    [SerializeField] private float silentMovementSpeed;
-    [SerializeField] private float groundDrag;
+    [SerializeField] private float RegularMovementSpeed;
+    [SerializeField] private float SilentMovementSpeed;
+    [SerializeField] private float GroundDrag;
     [Header("Jump and Crouch")]
-    [SerializeField] private float coyoteTime;
-    [SerializeField] private float regularJumpForce;
-    [SerializeField] private float crouchYScale;
+    [SerializeField] private float CoyoteTime;
+    [SerializeField] private float RegularJumpForce;
+    [SerializeField] private float CrouchYScale;
     [Header("Slope Handling")]
-    [SerializeField] private float slopeAdjustedMass;
-    [SerializeField] private float defaultMass;
-    [SerializeField] private float playerHeight;
-    [SerializeField] private float maxSlopeAngle;
-    private Transform playerTransform;
-    private Rigidbody _rb;
-    private Vector3 moveDirection;
-    private float startYScale; 
-    public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, whatIsGround);
+    [SerializeField] private float SlopeAdjustedMass;
+    [SerializeField] private float DefaultMass;
+    [SerializeField] private float PlayerHeight;
+    [SerializeField] private float MaxSlopeAngle;
+    private Transform PlayerTransform;
+    private Rigidbody RigidBody;
+    private Vector3 MoveDirection;
+    private float StartYScale; 
+    public bool IsGrounded => Physics.Raycast(transform.position, Vector3.down, 1.2f, WhatIsGround);
     public bool IsWalking => InputManager.PlayerVector != Vector2.zero;
     [HideInInspector] public bool IsCrouching = false;
     [HideInInspector] public bool IsSilentWalking = false;
@@ -36,28 +36,28 @@ public class P_movement : MonoBehaviour
     private bool CoyoteTimerActive = false;
     void Awake()
     {
-        CurrentMovementSpeed = regularMovementSpeed;
-        CurrentJumpForce = regularJumpForce;
-        _rb = GetComponent<Rigidbody>();
-        _rb.freezeRotation = true;
-        playerTransform = GetComponent<Transform>();
-        startYScale  = playerTransform.localScale.y;
+        CurrentMovementSpeed = RegularMovementSpeed;
+        CurrentJumpForce = RegularJumpForce;
+        RigidBody = GetComponent<Rigidbody>();
+        RigidBody.freezeRotation = true;
+        PlayerTransform = GetComponent<Transform>();
+        StartYScale  = PlayerTransform.localScale.y;
     }
     private void Update()
     {
-        _rb.useGravity = !OnSlope();
-        if (IsGrounded) _rb.drag = groundDrag;
+        RigidBody.useGravity = !OnSlope();
+        if (IsGrounded) RigidBody.drag = GroundDrag;
         else
         {
-            _rb.drag = 0;
+            RigidBody.drag = 0;
         }
         if (OnSlope())
         {
-            _rb.mass = slopeAdjustedMass;
+            RigidBody.mass = SlopeAdjustedMass;
         }
         else
         {
-            _rb.mass = defaultMass;
+            RigidBody.mass = DefaultMass;
         }
         StateHandler();
         SpeedControl();
@@ -67,7 +67,7 @@ public class P_movement : MonoBehaviour
         if (!IsGrounded)
         {
             CoyoteTimerActive = true;
-            Invoke(nameof(DisableCoyoteTimer), coyoteTime);
+            Invoke(nameof(DisableCoyoteTimer), CoyoteTime);
         }
     }
     #region States,StateHandler
@@ -83,45 +83,45 @@ public class P_movement : MonoBehaviour
     public void StateHandler()
     {
         if(!IsWalking && IsGrounded){
-            playerState = PlayerStates.IDLE;
+            PlayerState = PlayerStates.IDLE;
         }
         else if (IsCrouching)
         {
-            playerState = PlayerStates.CROUCHING;
+            PlayerState = PlayerStates.CROUCHING;
         }
         else if (IsWalking && !IsSilentWalking)
         {
-            playerState = PlayerStates.WALKING;
+            PlayerState = PlayerStates.WALKING;
         }
         else if (IsSilentWalking)
         {
-            playerState = PlayerStates.SILENTWALKING;
+            PlayerState = PlayerStates.SILENTWALKING;
         }
         else
         {
-            playerState = PlayerStates.AIR;
+            PlayerState = PlayerStates.AIR;
         }
     }
     #endregion
     #region Movement
     public void HandleMovement(Vector2 input)
     {
-        moveDirection = Vector3.zero;
-        moveDirection = orientation.forward * input.y + orientation.right * input.x;
-        _rb.AddForce(10f * CurrentMovementSpeed * moveDirection.normalized,ForceMode.Force);
+        MoveDirection = Vector3.zero;
+        MoveDirection = Orientation.forward * input.y + Orientation.right * input.x;
+        RigidBody.AddForce(10f * CurrentMovementSpeed * MoveDirection.normalized,ForceMode.Force);
     }
     public void HandleMovement(Vector3 direction)
     {
-        _rb.AddForce(20f * CurrentMovementSpeed * direction.normalized, ForceMode.Force);
+        RigidBody.AddForce(20f * CurrentMovementSpeed * direction.normalized, ForceMode.Force);
     } 
     private void SpeedControl()
     {
-        Vector3 flatVel = new(_rb.velocity.x,0f,_rb.velocity.z);
+        Vector3 flatVel = new(RigidBody.velocity.x,0f,RigidBody.velocity.z);
 
         if(flatVel.magnitude > CurrentMovementSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * CurrentMovementSpeed;
-            _rb.velocity = new Vector3(limitedVel.x,_rb.velocity.y,limitedVel.z);
+            RigidBody.velocity = new Vector3(limitedVel.x,RigidBody.velocity.y,limitedVel.z);
         }
     }
     #endregion
@@ -129,9 +129,9 @@ public class P_movement : MonoBehaviour
     public void Jump()
     {
         if(IsGrounded || CoyoteTimerActive){
-            _rb.mass = defaultMass;
-            _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
-            _rb.AddForce(transform.up * CurrentJumpForce, ForceMode.Impulse);
+            RigidBody.mass = DefaultMass;
+            RigidBody.velocity = new Vector3(RigidBody.velocity.x, 0f, RigidBody.velocity.z);
+            RigidBody.AddForce(transform.up * CurrentJumpForce, ForceMode.Impulse);
             CoyoteTimerActive = false;
         }
     }
@@ -144,49 +144,49 @@ public class P_movement : MonoBehaviour
     public void Crouch()
     {
         IsCrouching = true;
-        CurrentMovementSpeed = silentMovementSpeed;
-        playerTransform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-        if (IsGrounded) _rb.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
+        CurrentMovementSpeed = SilentMovementSpeed;
+        PlayerTransform.localScale = new Vector3(transform.localScale.x, CrouchYScale, transform.localScale.z);
+        if (IsGrounded) RigidBody.AddForce(Vector3.down * 5f, ForceMode.Impulse); 
     }
     public void StopCrouch()
     {
         IsCrouching = false;
-        CurrentMovementSpeed = regularMovementSpeed;
-        playerTransform.localScale = new Vector3(transform.localScale.x, startYScale, 1);
+        CurrentMovementSpeed = RegularMovementSpeed;
+        PlayerTransform.localScale = new Vector3(transform.localScale.x, StartYScale, 1);
     }
     #endregion
     #region SilentWalk
     public void SilentWalk()
     {
         IsSilentWalking = true;
-        CurrentMovementSpeed = silentMovementSpeed;
+        CurrentMovementSpeed = SilentMovementSpeed;
     }
     public void StopSilentWalk()
     {
         IsSilentWalking = false;
-        if(playerState == PlayerStates.CROUCHING)
+        if(PlayerState == PlayerStates.CROUCHING)
         {
-            CurrentMovementSpeed = silentMovementSpeed;
+            CurrentMovementSpeed = SilentMovementSpeed;
         }
         else
         {
-            CurrentMovementSpeed = regularMovementSpeed;
+            CurrentMovementSpeed = RegularMovementSpeed;
         }     
     }
     #endregion
     #region Slope
     public bool OnSlope()
     {
-        if (Physics.Raycast(transform.position,Vector3.down,out slopeHit,playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position,Vector3.down,out SlopeHit,PlayerHeight * 0.5f + 0.3f))
         {
-            float angle = Vector3.Angle(Vector3.up,slopeHit.normal);
-            return angle < maxSlopeAngle && angle != 0;
+            float angle = Vector3.Angle(Vector3.up,SlopeHit.normal);
+            return angle < MaxSlopeAngle && angle != 0;
         }
         return false;
     }
     public Vector3 GetSlopeMoveDirection()
     {
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+        return Vector3.ProjectOnPlane(MoveDirection, SlopeHit.normal);
     }
     #endregion
 }
