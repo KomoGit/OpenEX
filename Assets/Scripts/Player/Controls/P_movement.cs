@@ -62,14 +62,6 @@ public class P_movement : MonoBehaviour
         StateHandler();
         SpeedControl();
     }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (!IsGrounded)
-        {
-            CoyoteTimerActive = true;
-            Invoke(nameof(DisableCoyoteTimer), CoyoteTime);
-        }
-    }
     #region States,StateHandler
     public enum PlayerStates
     {
@@ -126,6 +118,15 @@ public class P_movement : MonoBehaviour
     }
     #endregion
     #region Jump
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!IsGrounded)
+        {
+            CoyoteTimerActive = true;
+            Invoke(nameof(DisableCoyoteTimer), CoyoteTime);
+        }
+    }
+
     public void Jump()
     {
         if(IsGrounded || CoyoteTimerActive){
