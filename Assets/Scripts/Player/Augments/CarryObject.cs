@@ -16,11 +16,12 @@ public class CarryObject : MonoBehaviour, IAbility
     [SerializeField] private float maxGrabDistance = 10f;
     [SerializeField] private float MaxWeight = 5f;
     [SerializeField] private float lerpSpeed = 100f;
-    [SerializeField] private float throwForce = 20f;
+    [SerializeField] private float[] ThrowForces = new float[4] { 20f,25f,30f,35f};
     [SerializeField][Range(1, 4)] private int AbilityLevel = 1;
 
     private GameObject _objectHeld = default;
     private readonly float AlphaNonT = 1f, AlphaTransparent = 0.5f;
+    private float ThrowForce;
     private bool GrabItemCooldown = true; //Used to prevent spam of throw ability.
     public Rigidbody GrabbedRB { get; private set; }
     private void Awake()
@@ -54,6 +55,7 @@ public class CarryObject : MonoBehaviour, IAbility
         }
     }
     #endregion
+
     #region Primary Components   
     private void CheckAbilityLevel(Rigidbody GrabbedRB)
     {
@@ -61,15 +63,21 @@ public class CarryObject : MonoBehaviour, IAbility
         {
             case 2:
                 DrainRatePerSecond = 0.5f;
+                ThrowForce = ThrowForces[1];
                 timer.SecondPassed += DrainPerSecond;
                 break;
             case 3:
                 DrainRatePerSecond = 1.0f;
+                ThrowForce = ThrowForces[2];
                 timer.SecondPassed += DrainPerSecond;
                 break;
             case 4:
                 DrainRatePerSecond = 1.5f;
+                ThrowForce = ThrowForces[3];
                 timer.SecondPassed += DrainPerSecond;
+                break;
+            default:
+                ThrowForce = ThrowForces[0];
                 break;
         }
     }
@@ -102,7 +110,7 @@ public class CarryObject : MonoBehaviour, IAbility
         if (GrabbedRB)
         {
             GrabbedRB.isKinematic = false;
-            GrabbedRB.AddForce(_camera.transform.forward * throwForce / GrabbedRB.mass, ForceMode.VelocityChange);
+            GrabbedRB.AddForce(_camera.transform.forward * ThrowForce / GrabbedRB.mass, ForceMode.VelocityChange);
             GrabbedRB = null;
             StartCoroutine(ResetAbility());
         }
@@ -125,6 +133,7 @@ public class CarryObject : MonoBehaviour, IAbility
         }
     }
     #endregion
+
     #region Secondary Components
     //Rendering mode of objects must be set to Transparent for this script to work.
     //Otherwise the changes will not be visible.
