@@ -2822,7 +2822,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1376
+  m_Name: pb_Mesh-2982
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11836,7 +11836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
-  timer: {fileID: 0}
+  timer: {fileID: 1494404797}
   Light: {fileID: 734998294}
   DrainRatePerSecond: 1
   FlashlightSFX: {fileID: 0}
@@ -11853,7 +11853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityManager: {fileID: 1494404791}
-  timer: {fileID: 0}
+  timer: {fileID: 1494404797}
   _playerCollider: {fileID: 1494404785}
   _camera: {fileID: 2025418230}
   _objectHolder: {fileID: 7468143222532031480}
@@ -11862,7 +11862,11 @@ MonoBehaviour:
   maxGrabDistance: 2
   MaxWeight: 5
   lerpSpeed: 100
-  throwForce: 5
+  ThrowForces:
+  - 20
+  - 25
+  - 30
+  - 35
   AbilityLevel: 1
 --- !u!114 &8344611502805901214
 MonoBehaviour:
