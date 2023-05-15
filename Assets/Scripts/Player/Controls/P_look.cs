@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class P_look : MonoBehaviour
 {
-    [SerializeField] private Transform orientation;
-    [SerializeField] private Transform pBody;
-    [SerializeField] private CarryObject carryObject;
+    [SerializeField] private Transform Orientation;
+    [SerializeField] private Transform Player;
+    [SerializeField] private CarryObject CarryObject;
     [SerializeField] private float SenX; 
     [SerializeField] private float SenY;
-    public float xRotation { get; private set; }
-    private float yRotation;
+    public float XRotation { get; private set; }
+    private float YRotation;
 
     void Awake()
     {
-        pBody = FindObjectOfType<P_movement>().transform;
+        Player = FindObjectOfType<P_movement>().transform;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -22,18 +22,18 @@ public class P_look : MonoBehaviour
         float mouseX = mouseVector.x * Time.deltaTime * SenX;
         float mouseY = mouseVector.y * Time.deltaTime * SenY;
 
-        xRotation -= mouseY;
-        yRotation += mouseX;
-        if (carryObject.GrabbedRB)
+        XRotation -= mouseY;
+        YRotation += mouseX;
+        if (CarryObject.GrabbedRB)
         {
-            xRotation = Mathf.Clamp(xRotation, -40f, 40f);
+            XRotation = Mathf.Clamp(XRotation, -40f, 40f);
         }
         else
         {
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            XRotation = Mathf.Clamp(XRotation, -90f, 90f);
         }
-        transform.localRotation = Quaternion.Euler(xRotation,yRotation,0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-        pBody.rotation = Quaternion.Euler(0,yRotation,0);
+        transform.localRotation = Quaternion.Euler(XRotation,YRotation,0);
+        Orientation.rotation = Quaternion.Euler(0, YRotation, 0);
+        Player.rotation = Quaternion.Euler(0,YRotation,0);
     }
 }
