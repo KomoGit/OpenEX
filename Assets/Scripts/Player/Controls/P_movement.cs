@@ -62,7 +62,7 @@ public class P_movement : MonoBehaviour
         StateHandler();
         SpeedControl();
     }
-    #region States,StateHandler
+    #region --States,StateHandler--
     public enum PlayerStates
     {
         IDLE,
@@ -96,7 +96,7 @@ public class P_movement : MonoBehaviour
         }
     }
     #endregion
-    #region Movement
+    #region --Movement--
     public void HandleMovement(Vector2 input)
     {
         MoveDirection = Vector3.zero;
@@ -119,7 +119,7 @@ public class P_movement : MonoBehaviour
         }
     }
     #endregion
-    #region Jump
+    #region --Jump--
     private void OnCollisionExit(Collision collision)
     {
         if (!IsGrounded)
@@ -143,7 +143,7 @@ public class P_movement : MonoBehaviour
         CoyoteTimerActive = false;
     }
     #endregion
-    #region Crouching
+    #region --Crouching--
     public void Crouch()
     {
         IsCrouching = true;
@@ -158,7 +158,7 @@ public class P_movement : MonoBehaviour
         PlayerTransform.localScale = new Vector3(transform.localScale.x, StartYScale, 1);
     }
     #endregion
-    #region SilentWalk
+    #region --SilentWalk--
     public void SilentWalk()
     {
         IsSilentWalking = true;
@@ -177,7 +177,7 @@ public class P_movement : MonoBehaviour
         }     
     }
     #endregion
-    #region Slope
+    #region --Slope--
     public bool OnSlope()
     {
         if (Physics.Raycast(transform.position,Vector3.down,out SlopeHit,PlayerHeight * 0.5f + 0.3f))
