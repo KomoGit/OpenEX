@@ -12,7 +12,7 @@ public class CarryObject : MonoBehaviour, IAbility
     [SerializeField] private Transform ObjectHolder;
     [Header("Values")]
     [SerializeField] private float DrainRatePerSecond = 1f;
-    [SerializeField] private float abilityCooldownTimer = 1f;
+    [SerializeField] private float AbilityCooldownTimer = 1f;
     [SerializeField] private float MaxGrabDistance = 10f;
     [SerializeField] private float MaxWeight = 5f;
     [SerializeField] private float LerpSpeed = 100f;
@@ -145,7 +145,7 @@ public class CarryObject : MonoBehaviour, IAbility
     }
     private IEnumerator ResetAbility()
     {
-        yield return new WaitForSeconds(abilityCooldownTimer);
+        yield return new WaitForSeconds(AbilityCooldownTimer);
         GrabItemCooldown = true;
     }
     #endregion  

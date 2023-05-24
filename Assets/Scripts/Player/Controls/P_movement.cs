@@ -72,6 +72,7 @@ public class P_movement : MonoBehaviour
         SILENTWALKING,
         SWIMMING
     }
+    //State handler is only for debug reasons. 
     public void StateHandler()
     {
         if(!IsWalking && IsGrounded){
@@ -102,6 +103,7 @@ public class P_movement : MonoBehaviour
         MoveDirection = Orientation.forward * input.y + Orientation.right * input.x;
         RigidBody.AddForce(10f * CurrentMovementSpeed * MoveDirection.normalized,ForceMode.Force);
     }
+    //This overload is used on slopes. 
     public void HandleMovement(Vector3 direction)
     {
         RigidBody.AddForce(20f * CurrentMovementSpeed * direction.normalized, ForceMode.Force);
