@@ -4,11 +4,11 @@ public class P_Lean : MonoBehaviour
 {
     [Header("Configures")]
     [SerializeField] private Transform LeanPivot;
-    [SerializeField] private float CurrentLean;
-    [SerializeField] private float TargetLean;
     [SerializeField] private float LeanAngle;
     [SerializeField] private float LeanSmoothing;
-    [SerializeField] private float LeanVelocity;
+    private float LeanVelocity;
+    private float CurrentLean;
+    private float TargetLean;
     private void Update()
     {
         CalculateLean();
@@ -20,12 +20,12 @@ public class P_Lean : MonoBehaviour
         LeanPivot.localRotation = Quaternion.Euler(new Vector3(0, 0, CurrentLean));
     }
 
-    private void LeanLeft()
-    {
-        CurrentLean = -LeanAngle;
-    }
-    private void LeanRight()
+    public void LeanLeft()
     {
         CurrentLean = LeanAngle;
+    }
+    public void LeanRight()
+    {
+        CurrentLean = -LeanAngle;
     }
 }
