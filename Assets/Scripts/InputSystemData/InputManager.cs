@@ -9,12 +9,15 @@ public class InputManager : MonoBehaviour
     [SerializeField] private Flashlight FlashlightObject;
     [SerializeField] private Agility AgilityObject;
     [SerializeField] private P_movement MovementScriptObject;
+    [SerializeField] private P_Lean PlayerLeanObject;
     [SerializeField] private P_look LookScriptObject;
     public bool AllowPlayerMovement { private get; set; } = true;
     public static Vector2 PlayerVector { get; private set; } //Not sure if this is spaghetti code, but this is being accessed by p_movement where it is accessed by this script.
     private void Awake()
     {
         _ctrl = new PControls();
+        _ctrl.Player.LeanLeft.performed += _ => PlayerLeanObject.LeanLeft();
+        _ctrl.Player.LeanRight.performed += _ => PlayerLeanObject.LeanRight();
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
