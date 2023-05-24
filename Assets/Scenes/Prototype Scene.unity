@@ -6961,18 +6961,18 @@ MonoBehaviour:
   PlayerState: 0
   WhatIsGround:
     serializedVersion: 2
-    m_Bits: 0
-  Orientation: {fileID: 0}
-  RegularMovementSpeed: 0
-  SilentMovementSpeed: 0
-  GroundDrag: 0
-  CoyoteTime: 0
-  RegularJumpForce: 0
-  CrouchYScale: 0
-  SlopeAdjustedMass: 0
-  DefaultMass: 0
-  PlayerHeight: 0
-  MaxSlopeAngle: 0
+    m_Bits: 8
+  Orientation: {fileID: 1339073647}
+  RegularMovementSpeed: 5
+  SilentMovementSpeed: 2
+  GroundDrag: 4
+  CoyoteTime: 0.5
+  RegularJumpForce: 5
+  CrouchYScale: 0.5
+  SlopeAdjustedMass: 5
+  DefaultMass: 1
+  PlayerHeight: 1
+  MaxSlopeAngle: 40
   IsCrouching: 0
   IsSilentWalking: 0
   CurrentMovementSpeed: 0
@@ -6989,17 +6989,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c984384d35e4bd045b0bd2893eac0421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FootstepAudioSource: {fileID: 0}
-  PlayerScript: {fileID: 0}
+  FootstepAudioSource: {fileID: 1494404795}
+  PlayerScript: {fileID: 1494404793}
   BaseStepSpeed: 0.5
   CrouchStepMultiplier: 1.5
-  CarpetClips: []
-  GrassClips: []
-  MetalClips: []
-  StoneClips: []
-  TileClips: []
-  WoodClips: []
-  WaterClips: []
+  CarpetClips:
+  - {fileID: 8300000, guid: 1a0091aa1a4d7534097aacb3f3b00c9b, type: 3}
+  - {fileID: 8300000, guid: 86e517a39fe3041459e47cf83acdf1e3, type: 3}
+  - {fileID: 8300000, guid: f285f21429d913d46b6c927a78a0778a, type: 3}
+  - {fileID: 8300000, guid: dd85d1fd5cbe6ad4e8e36781eacfc78e, type: 3}
+  GrassClips:
+  - {fileID: 8300000, guid: 0cb151dda04f2aa40a3e26aa1d703be9, type: 3}
+  - {fileID: 8300000, guid: 065e66a41e520d446a632ff08a263897, type: 3}
+  - {fileID: 8300000, guid: e6aa6c9bb757e384695e9d283d191500, type: 3}
+  - {fileID: 8300000, guid: 2c968d271ffe0944ca0ec88495dc05a5, type: 3}
+  MetalClips:
+  - {fileID: 8300000, guid: 992f6146d79833a4fbd7bdd5159019a7, type: 3}
+  - {fileID: 8300000, guid: eef3b16e71758c5478f4a23a6366333f, type: 3}
+  - {fileID: 8300000, guid: 02efc4ee69c83c7459b2bf271b0c44c2, type: 3}
+  - {fileID: 8300000, guid: 402e26f936d520545a38670d07deebad, type: 3}
+  StoneClips:
+  - {fileID: 8300000, guid: b2445c74ad96ebc438a8d7dc61d5c29a, type: 3}
+  - {fileID: 8300000, guid: e0c4bb6e9d0c52c4a9970aebf62ca7ea, type: 3}
+  - {fileID: 8300000, guid: 581b7ee93f4fca64ca208d22f26aa9e0, type: 3}
+  - {fileID: 8300000, guid: ca8b94f638f46b4489cd710f64a2d506, type: 3}
+  TileClips:
+  - {fileID: 8300000, guid: a2a162d9ac912e44babea8639765c046, type: 3}
+  - {fileID: 8300000, guid: d14f88ebca4e93d438df09e53de6ce87, type: 3}
+  - {fileID: 8300000, guid: e6d09739abbfd3c4baf631a2c794dcc7, type: 3}
+  - {fileID: 8300000, guid: 69101b64261888c47bf7f482134f2ac7, type: 3}
+  WoodClips:
+  - {fileID: 8300000, guid: 9579e3e24c44d6b4999b645b43eb3c05, type: 3}
+  - {fileID: 8300000, guid: 00171c03de7c91943a60957950681a90, type: 3}
+  - {fileID: 8300000, guid: c5770c89d40099141b7e663ac4481947, type: 3}
+  - {fileID: 8300000, guid: 49ffbec8dad96f248bed5b451af2d159, type: 3}
+  WaterClips:
+  - {fileID: 8300000, guid: d7b422a17c34fcf46a5234fee4feef5b, type: 3}
+  - {fileID: 8300000, guid: 1a0ca9db8a3730f4c95cb9916b369c4c, type: 3}
+  - {fileID: 8300000, guid: a5c66cb050b60e14bb1d89a47c821cba, type: 3}
 --- !u!82 &1494404795
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7109,7 +7136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
-  Timer: {fileID: 0}
+  Timer: {fileID: 1494404797}
   PlayerMovement: {fileID: 1494404793}
   DrainRatePerSecond: 1
   AgilitySFX: {fileID: 0}
@@ -11278,9 +11305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a56c100d68089761bc028ba6de8ff29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Orientation: {fileID: 0}
-  Player: {fileID: 0}
-  CarryObject: {fileID: 0}
+  Orientation: {fileID: 1339073647}
+  Player: {fileID: 1494404788}
+  CarryObject: {fileID: 8344611502805901213}
   SenX: 10
   SenY: 10
 --- !u!1 &2121893231
@@ -11809,7 +11836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AbilityManager: {fileID: 1494404791}
-  Timer: {fileID: 0}
+  Timer: {fileID: 1494404797}
   Light: {fileID: 734998294}
   DrainRatePerSecond: 1
   FlashlightSFX: {fileID: 0}
@@ -11825,13 +11852,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87c1d986119b5b74088ebdb235760650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AbilityManager: {fileID: 0}
-  Timer: {fileID: 0}
-  PlayerCollider: {fileID: 0}
-  Camera: {fileID: 0}
-  ObjectHolder: {fileID: 0}
+  AbilityManager: {fileID: 1494404791}
+  Timer: {fileID: 1494404797}
+  PlayerCollider: {fileID: 1494404785}
+  Camera: {fileID: 2025418230}
+  ObjectHolder: {fileID: 7468143222532031480}
   DrainRatePerSecond: 1
-  abilityCooldownTimer: 0.5
+  AbilityCooldownTimer: 1
   MaxGrabDistance: 10
   MaxWeight: 5
   LerpSpeed: 100
@@ -11853,7 +11880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fc213787fca24449e8d47bf6373ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCam: {fileID: 0}
+  PlayerCam: {fileID: 2025418230}
 --- !u!114 &8344611502805901215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11866,4 +11893,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07a6eaa6bab67944bbb6e1091634207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  Player: {fileID: 1618748090}
