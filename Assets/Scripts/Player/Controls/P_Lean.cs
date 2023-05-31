@@ -9,23 +9,26 @@ public class P_Lean : MonoBehaviour
     private float LeanVelocity;
     private float CurrentLean;
     private float TargetLean;
-    private void Update()
+
+    void Update()
     {
         CalculateLean();
     }
-
+    public void LeanLeft()
+    {
+        TargetLean = LeanAngle;
+    }
+    public void LeanRight()
+    {
+        TargetLean = -LeanAngle;
+    }
+    public void CancelLean()
+    {
+        TargetLean = 0;
+    }
     private void CalculateLean()
     {
         CurrentLean = Mathf.SmoothDamp(CurrentLean,TargetLean, ref LeanVelocity, LeanSmoothing);
         LeanPivot.localRotation = Quaternion.Euler(new Vector3(0, 0, CurrentLean));
-    }
-
-    public void LeanLeft()
-    {
-        CurrentLean = LeanAngle;
-    }
-    public void LeanRight()
-    {
-        CurrentLean = -LeanAngle;
     }
 }
