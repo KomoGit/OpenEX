@@ -78,22 +78,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Lean Left",
+                    "name": "Lean Right",
                     "type": "Button",
                     "id": "af259714-f097-49d7-a272-29015620ea11",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "Lean Right",
+                    "name": "Lean Left",
                     "type": "Button",
                     "id": "78d23b0d-d8e2-41e2-b0a6-baf550636c1b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -232,22 +232,22 @@
                 {
                     "name": "",
                     "id": "a34e2ac5-ce67-4864-bd87-55f09e267f24",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Lean Left",
+                    "action": "Lean Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "6351cc3d-d6eb-4163-a2a6-65d5e992bcf3",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Lean Right",
+                    "action": "Lean Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
