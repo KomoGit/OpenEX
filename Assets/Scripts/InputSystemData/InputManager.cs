@@ -16,14 +16,22 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         _ctrl = new PControls();
+        #region Leaning
         _ctrl.Player.LeanLeft.performed += _ => PlayerLeanObject.LeanLeft();
+        _ctrl.Player.LeanLeft.canceled += _ => PlayerLeanObject.CancelLean();
+        _ctrl.Player.LeanRight.canceled += _ => PlayerLeanObject.CancelLean();
         _ctrl.Player.LeanRight.performed += _ => PlayerLeanObject.LeanRight();
+        #endregion
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();
+        #region Crouch
         _ctrl.Player.Crouch.started += _ => MovementScriptObject.Crouch();
         _ctrl.Player.Crouch.canceled += _ => MovementScriptObject.StopCrouch();
+        #endregion
+        #region Silent Walk
         _ctrl.Player.SilentWalk.started += _ => MovementScriptObject.SilentWalk();
         _ctrl.Player.SilentWalk.canceled += _ => MovementScriptObject.StopSilentWalk();
+        #endregion
         _ctrl.DebugKeys.ResetEnergy.started += _ => ResetCharge.SetEnergyFull();
         //Abilities 
         _ctrl.Abilities.Flashlight.started += _ => FlashlightObject.AbilityActivate();
