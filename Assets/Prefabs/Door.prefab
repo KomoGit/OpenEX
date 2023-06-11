@@ -357,9 +357,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d95806b03a61a4b8de115a669b1379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
-  _angle: -90
-  _isLocked: 1
-  _audioSource: {fileID: 0}
-  OpenDoor: {fileID: 8300000, guid: 1eaf4cb4c0df76746a94d02a23e94376, type: 3}
-  CloseDoor: {fileID: 8300000, guid: 5626dc685984c90479bfa6f60d2bb57e, type: 3}
+  OpenCloseSpeed: 2
+  Angle: 90
+  IsLocked: 0
+  AudioSource: {fileID: 0}
+  OpenDoor: {fileID: 8300000, guid: 127203afb10ceaf4f82ba42d64c2736e, type: 3}
+  CloseDoor: {fileID: 8300000, guid: eec13d7d81f013040beec28400f67ee5, type: 3}

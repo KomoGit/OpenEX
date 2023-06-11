@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractive
 {
+    // TODO: Implement lock strenght and lockpicking mechanics to the game.
+    // For electronic doors, we will use Multitool, for regular ones, we will use lockpick.
+    // Some doors in game can use both lockpick and multitool.
     [SerializeField] private float OpenCloseSpeed = 2f;
     [SerializeField] private float Angle = 90f;
     [SerializeField] private bool IsLocked = false;
