@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Door : MonoBehaviour, IInteractive
@@ -12,7 +14,6 @@ public class Door : MonoBehaviour, IInteractive
     [SerializeField] private AudioSource AudioSource;
     [SerializeField] private AudioClip OpenDoor = default;
     [SerializeField] private AudioClip CloseDoor = default;
-    //public event EventHandler RemoteOpenDoor;
     private bool IsOpen = false;
     private Quaternion StartRotation;
     private Quaternion EndRotation;
@@ -66,8 +67,4 @@ public class Door : MonoBehaviour, IInteractive
     {
         AudioSource.PlayOneShot(clip);
     }
-    //protected virtual void OnRemoteOpenDoor()
-    //{
-    //    RemoteOpenDoor?.Invoke(this, EventArgs.Empty);
-    //}
 }
