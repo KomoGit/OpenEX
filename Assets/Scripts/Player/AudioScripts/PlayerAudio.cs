@@ -20,6 +20,7 @@ public class PlayerAudio : MonoBehaviour
     private float FootstepTimer = 0f;
     private float GetCurrentOffset => PlayerScript.IsCrouching || PlayerScript.IsSilentWalking ? BaseStepSpeed * CrouchStepMultiplier
                                       : BaseStepSpeed;
+    private int CurrentAudioQuene = 0;
     private void Awake()
     {
         PlayerScript = FindObjectOfType<P_movement>();
@@ -68,12 +69,24 @@ public class PlayerAudio : MonoBehaviour
                         FootstepAudioSource.PlayOneShot(WaterClips[Random.Range(0, WaterClips.Length - 1)]);
                         break;
                     default:
-                        Debug.Log("Warning, no tag has been added to this object.");
-                        FootstepAudioSource.PlayOneShot(StoneClips[Random.Range(0, StoneClips.Length - 1)]);
+                        Debug.LogWarning("Warning, no tag has been added to this object.");
+                        //FootstepAudioSource.PlayOneShot(StoneClips[Random.Range(0, StoneClips.Length - 1)]);
+                        FootstepAudioSource.PlayOneShot(GetAudioFromArray(StoneClips));
                         break;
                 }
             }
             FootstepTimer = GetCurrentOffset;
         }
+    }
+    //I am trying to get away from Random becuase random sometimes sends the same item twice.
+    public AudioClip GetAudioFromArray(AudioClip[] audio) 
+    {
+        if(audio.Length <= CurrentAudioQuene)
+        {
+            CurrentAudioQuene = 0;
+        }
+        CurrentAudioQuene++;
+        Debug.Log(audio[CurrentAudioQuene - 1].name);
+        return audio[CurrentAudioQuene - 1];
     }
 }
