@@ -324,6 +324,15 @@ public partial class @PControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Combat Strength / Microfibral Muscle"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9fa8923-9d6b-4f82-b9f5-ada1a6ef6aaf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -346,6 +355,17 @@ public partial class @PControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Speen Enhancment / Run Silent"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f5e2322-dd59-474c-895f-f4b4b2f1d76c"",
+                    ""path"": ""<Keyboard>/f10"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Combat Strength / Microfibral Muscle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -401,6 +421,7 @@ public partial class @PControls: IInputActionCollection2, IDisposable
         m_Abilities = asset.FindActionMap("Abilities", throwIfNotFound: true);
         m_Abilities_Flashlight = m_Abilities.FindAction("Flashlight", throwIfNotFound: true);
         m_Abilities_SpeenEnhancmentRunSilent = m_Abilities.FindAction("Speen Enhancment / Run Silent", throwIfNotFound: true);
+        m_Abilities_CombatStrengthMicrofibralMuscle = m_Abilities.FindAction("Combat Strength / Microfibral Muscle", throwIfNotFound: true);
         // Debug Keys
         m_DebugKeys = asset.FindActionMap("Debug Keys", throwIfNotFound: true);
         m_DebugKeys_ResetEnergy = m_DebugKeys.FindAction("Reset Energy", throwIfNotFound: true);
@@ -631,12 +652,14 @@ public partial class @PControls: IInputActionCollection2, IDisposable
     private List<IAbilitiesActions> m_AbilitiesActionsCallbackInterfaces = new List<IAbilitiesActions>();
     private readonly InputAction m_Abilities_Flashlight;
     private readonly InputAction m_Abilities_SpeenEnhancmentRunSilent;
+    private readonly InputAction m_Abilities_CombatStrengthMicrofibralMuscle;
     public struct AbilitiesActions
     {
         private @PControls m_Wrapper;
         public AbilitiesActions(@PControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Flashlight => m_Wrapper.m_Abilities_Flashlight;
         public InputAction @SpeenEnhancmentRunSilent => m_Wrapper.m_Abilities_SpeenEnhancmentRunSilent;
+        public InputAction @CombatStrengthMicrofibralMuscle => m_Wrapper.m_Abilities_CombatStrengthMicrofibralMuscle;
         public InputActionMap Get() { return m_Wrapper.m_Abilities; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -652,6 +675,9 @@ public partial class @PControls: IInputActionCollection2, IDisposable
             @SpeenEnhancmentRunSilent.started += instance.OnSpeenEnhancmentRunSilent;
             @SpeenEnhancmentRunSilent.performed += instance.OnSpeenEnhancmentRunSilent;
             @SpeenEnhancmentRunSilent.canceled += instance.OnSpeenEnhancmentRunSilent;
+            @CombatStrengthMicrofibralMuscle.started += instance.OnCombatStrengthMicrofibralMuscle;
+            @CombatStrengthMicrofibralMuscle.performed += instance.OnCombatStrengthMicrofibralMuscle;
+            @CombatStrengthMicrofibralMuscle.canceled += instance.OnCombatStrengthMicrofibralMuscle;
         }
 
         private void UnregisterCallbacks(IAbilitiesActions instance)
@@ -662,6 +688,9 @@ public partial class @PControls: IInputActionCollection2, IDisposable
             @SpeenEnhancmentRunSilent.started -= instance.OnSpeenEnhancmentRunSilent;
             @SpeenEnhancmentRunSilent.performed -= instance.OnSpeenEnhancmentRunSilent;
             @SpeenEnhancmentRunSilent.canceled -= instance.OnSpeenEnhancmentRunSilent;
+            @CombatStrengthMicrofibralMuscle.started -= instance.OnCombatStrengthMicrofibralMuscle;
+            @CombatStrengthMicrofibralMuscle.performed -= instance.OnCombatStrengthMicrofibralMuscle;
+            @CombatStrengthMicrofibralMuscle.canceled -= instance.OnCombatStrengthMicrofibralMuscle;
         }
 
         public void RemoveCallbacks(IAbilitiesActions instance)
@@ -746,6 +775,7 @@ public partial class @PControls: IInputActionCollection2, IDisposable
     {
         void OnFlashlight(InputAction.CallbackContext context);
         void OnSpeenEnhancmentRunSilent(InputAction.CallbackContext context);
+        void OnCombatStrengthMicrofibralMuscle(InputAction.CallbackContext context);
     }
     public interface IDebugKeysActions
     {

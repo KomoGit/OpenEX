@@ -17,10 +17,10 @@ public class InputManager : MonoBehaviour
     {
         _ctrl = new PControls();
         #region Leaning
-        _ctrl.Player.LeanLeft.performed += _ => PlayerLeanObject.LeanLeft();
-        _ctrl.Player.LeanLeft.canceled += _ => PlayerLeanObject.CancelLean();
-        _ctrl.Player.LeanRight.canceled += _ => PlayerLeanObject.CancelLean();
-        _ctrl.Player.LeanRight.performed += _ => PlayerLeanObject.LeanRight();
+        _ctrl.Player.LeanLeft.performed += _ => PlayerLeanObject.OnLeftLean();
+        _ctrl.Player.LeanLeft.canceled += _ => PlayerLeanObject.OnStopLean();
+        _ctrl.Player.LeanRight.canceled += _ => PlayerLeanObject.OnStopLean();
+        _ctrl.Player.LeanRight.performed += _ => PlayerLeanObject.OnRightLean();
         #endregion
         _ctrl.Player.Jump.started += _ => MovementScriptObject.Jump();
         _ctrl.Player.Interact.started += _ => CarryObject.AbilityActivate();

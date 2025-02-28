@@ -14,7 +14,7 @@ public class Door : MonoBehaviour, IInteractive
     [SerializeField] private AudioSource AudioSource;
     [SerializeField] private AudioClip OpenDoor = default;
     [SerializeField] private AudioClip CloseDoor = default;
-    private bool IsOpen = false;
+    [HideInInspector] public bool IsOpen = false;
     private Quaternion StartRotation;
     private Quaternion EndRotation;
     private Coroutine _Coroutine;

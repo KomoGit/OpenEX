@@ -302,6 +302,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Combat Strength / Microfibral Muscle",
+                    "type": "Button",
+                    "id": "d9fa8923-9d6b-4f82-b9f5-ada1a6ef6aaf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -324,6 +333,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Speen Enhancment / Run Silent",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f5e2322-dd59-474c-895f-f4b4b2f1d76c",
+                    "path": "<Keyboard>/f10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Combat Strength / Microfibral Muscle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

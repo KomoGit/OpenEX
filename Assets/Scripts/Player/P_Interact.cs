@@ -14,15 +14,15 @@ public class P_Interact : MonoBehaviour
             }
         }
     } 
-    private void Interact(IInteractive _intr)
+    private void Interact(IInteractive interactive)
     {
-        if (_intr.IsActivated())
+        if (interactive.IsActivated())
         {
-            _intr.Deactivate();
+            interactive.Deactivate();
         }
         else
         {
-            _intr.Activate();
+            interactive.Activate();
         }
     }
 }

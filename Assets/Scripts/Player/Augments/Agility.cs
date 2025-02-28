@@ -46,7 +46,7 @@ public class Agility : MonoBehaviour,IAbility
             }
         }
     }
-    private void DrainPerSecond(object sender, EventArgs e)
+    private void DrainEnergyPerSecond(object sender, EventArgs e)
     {
         if (!AbilityManager.IsEnergyDepleted())
         {
@@ -57,7 +57,7 @@ public class Agility : MonoBehaviour,IAbility
     private void EnableAgility()
     {
         AgilityEnabled = true;
-        Timer.SecondPassed += DrainPerSecond;
+        Timer.SecondPassed += DrainEnergyPerSecond;
         switch (AbilityLevel)
         {
             case 2:
@@ -84,6 +84,6 @@ public class Agility : MonoBehaviour,IAbility
         AgilityEnabled = false;
         PlayerMovement.CurrentJumpForce = PlayerJumpForce;
         PlayerMovement.CurrentMovementSpeed = PlayerSpeed;
-        Timer.SecondPassed -= DrainPerSecond;
+        Timer.SecondPassed -= DrainEnergyPerSecond;
     }
 }

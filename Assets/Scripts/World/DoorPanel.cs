@@ -1,32 +1,22 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorPanel : MonoBehaviour, IInteractive
 {
     [SerializeField] private Door DoorObject;
 
-    private void Awake()
-    {
-
-    }
-
     public void Activate()
     {
-        
+        DoorObject.Activate();
     }
 
     public void Deactivate()
     {
-
+        DoorObject.Deactivate();
     }
 
     public bool IsActivated()
     {
-        throw new NotImplementedException();
+        return DoorObject.IsOpen;
     }
-
-
-
 }

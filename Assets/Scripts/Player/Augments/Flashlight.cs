@@ -23,7 +23,7 @@ public class Flashlight : MonoBehaviour,IAbility
             DisableFlashlight();
         }
     }
-    public void AbilityActivate() //DO NOT RENAME, PART OF INTERFACE
+    public void AbilityActivate()
     {
         if (!AbilityManager.IsEnergyDepleted()) 
         {

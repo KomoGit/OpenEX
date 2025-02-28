@@ -5,8 +5,8 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private float Duration = 10f;
     [SerializeField] private float timeRemaining;
+    [HideInInspector] public bool isRunning = false;
     private float timeSinceLastEvent;
-    public bool isRunning = false;
     public event EventHandler SecondPassed;
     public event EventHandler TimerFinished;
 

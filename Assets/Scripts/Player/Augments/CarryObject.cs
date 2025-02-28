@@ -31,7 +31,7 @@ public class CarryObject : MonoBehaviour, IAbility
     }
     private void FixedUpdate()
     {
-        if (GrabbedRB == null) Timer.SecondPassed -= DrainPerSecond;
+        if (GrabbedRB == null) Timer.SecondPassed -= DrainEnergyPerSecond;
         HoldObject();        
         IgnoreCollision();
     }
@@ -47,7 +47,7 @@ public class CarryObject : MonoBehaviour, IAbility
             CheckObject();
         }
     }
-    private void DrainPerSecond(object sender, EventArgs e)
+    private void DrainEnergyPerSecond(object sender, EventArgs e)
     {
         if (!AbilityManager.IsEnergyDepleted())
         {
@@ -64,17 +64,17 @@ public class CarryObject : MonoBehaviour, IAbility
             case 2:
                 DrainRatePerSecond = 0.5f;
                 ThrowForce = ThrowForces[1];
-                Timer.SecondPassed += DrainPerSecond;
+                Timer.SecondPassed += DrainEnergyPerSecond;
                 break;
             case 3:
                 DrainRatePerSecond = 1.0f;
                 ThrowForce = ThrowForces[2];
-                Timer.SecondPassed += DrainPerSecond;
+                Timer.SecondPassed += DrainEnergyPerSecond;
                 break;
             case 4:
                 DrainRatePerSecond = 1.5f;
                 ThrowForce = ThrowForces[3];
-                Timer.SecondPassed += DrainPerSecond;
+                Timer.SecondPassed += DrainEnergyPerSecond;
                 break;
             default:
                 ThrowForce = ThrowForces[0];

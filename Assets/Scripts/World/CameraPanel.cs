@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraPanel : MonoBehaviour,IInteractive
+public class CameraPanel : MonoBehaviour, IInteractive
 {
     [SerializeField] private Camera _camera;
     private InputManager _movement;
